@@ -1,0 +1,36 @@
+.job-posting {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.job-posting h1 {
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  padding: 5px;
+}
+
+.form-group input[type="submit"] {
+  padding: 10px;
+}
+
+.form-group input[type="submit"]:hover {
+  cursor: pointer;
+}

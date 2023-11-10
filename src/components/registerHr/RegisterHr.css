@@ -1,0 +1,34 @@
+.register-hr {
+  text-align: center;
+  padding: 20px;
+}
+
+.register-hr h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.register-hr-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.register-hr-form-group label {
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.register-hr-form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.register-hr-button {
+  background-color: #0077b6;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}

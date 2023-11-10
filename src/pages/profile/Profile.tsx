@@ -1,0 +1,202 @@
+import axios from "axios";
+import { UserInterface } from "../../types/Types";
+import "./Profile.css";
+import { useQuery } from "@tanstack/react-query";
+import AuthZustand from "../../zustand/AuthZustand";
+import { Place, Email } from "@mui/icons-material";
+import { useState } from "react";
+import { Dialog, DialogContent } from "@mui/material";
+import AddCareer from "../../components/addCareer/AddCareer";
+import CareerHistory from "../../components/careerHistory/CareerHistory";
+import Education from "../../components/education/Education";
+import AddEducation from "../../components/addEducation/AddEducation";
+import toast from "react-hot-toast";
+import AddLicense from "../../components/addLicense/AddLicense";
+import License from "../../components/licenses/License";
+import Skills from "../../components/skills/Skills";
+import Language from "../../components/language/Language";
+import AddLanguage from "../../components/addLanguage/AddLanguage";
+import AddSkills from "../../components/addSkills/AddSkills";
+import Printable from "../../components/printable/Printable";
+import Navbar from "../../components/navbar/Navbar";
+
+const Profile = () => {
+  const user = AuthZustand((state) => state.user);
+  const [openAddCareer, setOpenAddCareer] = useState<boolean>(false);
+  const [openAddEducation, setOpenAddEducation] = useState<boolean>(false);
+  const [openAddLicense, setOpenAddLicense] = useState<boolean>(false);
+  const [personalSummary, setPersonalSummary] = useState<string>("");
+  const [openResume, setOpenResume] = useState<boolean>(false);
+
+  const { data } = useQuery<UserInterface>({
+    queryKey: ["Profile"],
+    queryFn: async () =>
+      await axios
+        .get(`${import.meta.env.VITE_APP_API_URL}/api/user/${user}`)
+        .then((res) => res.data),
+  });
+
+  const toggleCloseAddCareer = () => {
+    setOpenAddCareer(false);
+  };
+
+  const toggleCloseAddEducation = () => {
+    setOpenAddEducation(false);
+  };
+
+  const toggleCloseAddLicense = () => {
+    setOpenAddLicense(false);
+  };
+
+  const handleUpdatePersonalSummary = async () => {
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_APP_API_URL}/api/user/update/${user}`,
+        {
+          personalSummary: personalSummary,
+        }
+      );
+      toast.success("Successful updated Personal Summary!", {
+        icon: "👏",
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const toggleOpenResume = () => {
+    setOpenResume(true);
+  };
+
+  const toggleCloseResume = () => {
+    setOpenResume(false);
+  };
+
+  return (
+    <div className="profile">
+      <Navbar />
+      <div className="profile-container">
+        <section className="profile-header">
+          <div className="profile-header-info-container">
+            <h1>{data?.firstName + " " + data?.lastName}</h1>
+            <span className="profile-info-list">
+              <Place /> {data?.address}
+            </span>
+            <span className="profile-info-list">
+              <Email /> {data?.email}
+            </span>
+          </div>
+        </section>
+      </div>
+      <div className="profile-input-container">
+        <div>
+          <h1>Personal Summary</h1>
+          <span>
+            Add a personal summary to your profile as a way to introduce who you
+            are.
+          </span>
+          <textarea
+            cols={30}
+            rows={10}
+            defaultValue={data?.personalSummary}
+            className="profile-personal-summary"
+            onChange={(e) => setPersonalSummary(e.target.value)}
+          ></textarea>
+          <button className="profile-btn" onClick={handleUpdatePersonalSummary}>
+            Save
+          </button>
+        </div>
+        <div>
+          <h1>Career History</h1>
+          <CareerHistory />
+          <button
+            className="profile-btn"
+            onClick={() => setOpenAddCareer(true)}
+          >
+            Add Career
+          </button>
+        </div>
+        <div>
+          <h1>Education</h1>
+          <Education />
+          <button
+            className="profile-btn"
+            onClick={() => setOpenAddEducation(true)}
+          >
+            Add Education
+          </button>
+        </div>
+        <div>
+          <h1>License and certifications</h1>
+          <License />
+          <button
+            className="profile-btn"
+            onClick={() => setOpenAddLicense(true)}
+          >
+            Add License or Certifications
+          </button>
+        </div>
+        <div>
+          <h1>Skills </h1>
+          <AddSkills />
+          <Skills />
+        </div>
+        <div>
+          <h1>Languages </h1>
+          <AddLanguage />
+          <Language />
+        </div>
+        <div>
+          <h1>Resume </h1>
+          <span>
+            Print or download your resume using the data you enter with us. You
+            could use this to apply to us.{" "}
+            <button className="profile-btn" onClick={toggleOpenResume}>
+              Click here...
+            </button>
+          </span>
+        </div>
+      </div>
+      <Dialog
+        open={openAddCareer}
+        onClose={toggleCloseAddCareer}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogContent>
+          <AddCareer toggleCloseAddCareer={toggleCloseAddCareer} />
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={openAddEducation}
+        onClose={toggleCloseAddEducation}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogContent>
+          <AddEducation toggleCloseAddEducation={toggleCloseAddEducation} />
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={openAddLicense}
+        onClose={toggleCloseAddLicense}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogContent>
+          <AddLicense toggleCloseAddLicense={toggleCloseAddLicense} />
+        </DialogContent>
+      </Dialog>
+      <Dialog open={openResume} onClose={toggleCloseResume} maxWidth="lg">
+        <DialogContent sx={{ overflowX: "hidden" }}>
+          <Printable toggleCloseResume={toggleCloseResume} />
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default Profile;

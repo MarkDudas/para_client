@@ -1,0 +1,72 @@
+.printable {
+  height: 100%;
+  width: 770px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 10px;
+
+  flex-wrap: wrap;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.printable-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.printable-name {
+  margin: 0;
+  padding: 0;
+}
+
+.printable-body-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.printable-column1 {
+  background-color: #323b4c;
+  color: white;
+  padding: 30px;
+  margin-right: 20px;
+  width: 30%;
+  word-break: break-all;
+}
+
+.printable-column-title {
+  margin-bottom: 0;
+}
+
+.printable-column-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+}
+
+.printable-hr {
+  width: 100%;
+}
+
+.printable-column2 {
+  padding: 20px;
+  width: 70%;
+}
+
+.printable-btn {
+  padding-top: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}

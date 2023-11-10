@@ -1,0 +1,30 @@
+.skills {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.skill-item {
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #f3f5f7;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(100px, 1fr)
+    ); /* Two items per row on screens less than 768px wide */
+  }
+}

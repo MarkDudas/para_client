@@ -1,0 +1,81 @@
+.application {
+  height: 100%;
+  width: 100vw;
+
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.application-container {
+  max-width: 1100px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  flex-direction: column;
+}
+
+.application-item {
+  display: flex;
+  align-items: center;
+}
+
+.application-company-image {
+  height: 340px;
+  width: auto;
+}
+
+.application-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.application-job-title {
+  margin: 0;
+  padding: 0;
+  font-size: 30px;
+  text-transform: capitalize;
+}
+
+.application-job-company {
+  margin: 0;
+  padding: 0;
+  text-transform: capitalize;
+}
+
+/* Hide the default file input button */
+.file-input {
+  display: none;
+}
+
+/* Style the custom file upload label */
+.custom-file-upload {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 7px 30px;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .application-company-image {
+    width: 90%;
+    height: auto;
+  }
+  .application-info-container {
+    padding: 0px 30px 0px 30px;
+  }
+}

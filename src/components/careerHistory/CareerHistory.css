@@ -1,0 +1,28 @@
+.career-history {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.career-history-container {
+  display: flex;
+
+  justify-content: space-between;
+  border: 2px solid #eaecf1;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.career-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.career-title {
+  margin: 0;
+  padding: 0;
+}

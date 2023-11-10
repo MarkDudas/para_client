@@ -1,0 +1,46 @@
+/* printable skills */
+
+.printable-skills {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.printable-skills-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* printable license */
+
+.license-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+}
+
+.license-info-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.license-info-title {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  gap: 5px;
+}
+
+/* pritnable language */
+
+.printable-language-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

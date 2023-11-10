@@ -1,0 +1,52 @@
+.applicant-list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.applicant-list-container {
+  max-width: 1100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.applicant-filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+
+.applicant-filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.applicant-list-table-header {
+  border-bottom: 3px solid #a1a1a1;
+}
+
+.applicant-list-table-row:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.applicant-search {
+  display: flex;
+  align-items: center;
+
+  background-color: #f2f2f2;
+  height: 56px;
+  width: 300px;
+  padding-left: 20px;
+}
+
+.applicant-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #f2f2f2;
+  padding-left: 10px;
+}

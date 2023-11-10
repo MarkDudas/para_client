@@ -1,0 +1,84 @@
+.profile {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-container {
+  max-width: 1000px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-header {
+  height: 250px;
+  width: 100%;
+  background-color: #fcc203;
+  margin-top: 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-header-info-container {
+  max-width: 800px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.profile-info-list {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-info-btn {
+  width: 100px;
+  height: 50px;
+  border: 2px solid black;
+  background-color: transparent;
+  border-radius: 20px;
+}
+
+.profile-input-container {
+  max-width: 800px;
+  width: 100%;
+}
+
+.profile-personal-summary {
+  width: 100%;
+  border-radius: 20px;
+  margin-top: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  border: 2px solid black;
+}
+
+.profile-btn {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  padding: 7px 30px;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.profile-input {
+  padding: 7px 15px;
+  width: 200px;
+  border: 2px solid black;
+}
