@@ -114,7 +114,7 @@ const RegisterHr = () => {
             onChange={handleChange}
           />
         </div>
-        <button onClick={handleSubmit} className="register-hr-button">
+        <button className="register-hr-button" onClick={handleSubmit} >
           Register
         </button>
       </div>

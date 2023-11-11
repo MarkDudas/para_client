@@ -15,6 +15,7 @@ import axios from "axios";
 import moment from "moment";
 import { useState } from "react";
 import RegisterHr from "../../components/registerHr/RegisterHr";
+import "./Admin.css"
 
 const Admin = () => {
   const { data } = useQuery<UserInterface[] | undefined>({
@@ -41,7 +42,7 @@ const Admin = () => {
       <div className="applicant-list">
         <TableContainer className="applicant-list-container">
           <div className="applicant-filter-container">
-            <button onClick={toggleOpenModal}>Register an HR</button>
+            <button className='register-button' onClick={toggleOpenModal}>Register an HR</button>
           </div>
 
           <Table>

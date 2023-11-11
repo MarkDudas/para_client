@@ -1,0 +1,32 @@
+/* Style for the registration button */
+.register-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: #3498db; /* Your chosen button color */
+    color: #fff; /* White text color */
+    font-family: 'Open Sans', sans-serif; /* Your chosen font */
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  /* Hover effect */
+  .register-button:hover {
+    background-color: #2980b9; /* Darker shade of your button color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Slight shadow effect */
+  }
+  
+  /* Optional icon style */
+  .register-button .icon {
+    margin-right: 8px; /* Adjust as needed */
+  }
+  
+  /* Center the button on the page (optional) */
+  .center-button {
+    text-align: center;
+    margin-top: 20px; /* Adjust as needed */
+  }
+  
