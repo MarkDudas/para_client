@@ -21,7 +21,7 @@ const ApplicantList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedJobPosted, setSelectedJobPosted] = useState<string>("All");
   const [sortOption, setSortOption] = useState<string>("rank-asc");
-
+  
   const { data: applicants } = useQuery<IApplicant[] | undefined>({
     queryKey: ["ApplicantList"],
     queryFn: async () =>

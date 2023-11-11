@@ -129,7 +129,7 @@ const Registration = () => {
           <label className="two-columns-label">
             Password
             <input
-              type="text"
+              type="password"
               className="two-columns-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -138,7 +138,7 @@ const Registration = () => {
           <label className="two-columns-label">
             Confirm Password
             <input
-              type="text"
+              type="password"
               className="two-columns-input"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
