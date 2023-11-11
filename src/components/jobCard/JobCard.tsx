@@ -64,10 +64,10 @@ const JobCard: React.FC<Prop> = ({ item }) => {
         <section className="jobcard-section responsive">
           <Paid sx={{ fontSize: "50px" }} className="jobcard-icon" />
           <div className="jobcard-info-container">
-            <span className="job-highlight">
-              {formatSalary(item.monthlySalaryFrom)} -
-              {formatSalary(item.monthlySalaryTo)}
-            </span>
+          <span className="job-highlight">
+  {formatSalary(item.monthlySalaryFrom)} - {formatSalary(item.monthlySalaryTo)}
+</span>
+
             <span className="job-description">Monthly salary</span>
           </div>
         </section>
