@@ -6,20 +6,19 @@
   height: 100vh;
   width: 100vw;
 }
-
 .login-container {
   width: 400px;
   height: 350px;
-  box-shadow: -4px 5px 5px 0px rgba(0, 0, 0, 0.65);
-  -webkit-box-shadow: -4px 5px 5px 0px rgba(0, 0, 0, 0.65);
-  -moz-box-shadow: -4px 5px 5px 0px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.65); /* Updated box-shadow property */
+  -webkit-box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.65);
+  -moz-box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.65);
   padding: 50px;
-
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+
 
 .login-form-container {
   width: 100%;
@@ -87,10 +86,10 @@ h3 {
 
 .button-group button {
   height: 40px;
-  width: 95%;
+  width: 65%;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  margin: 0 auto;
 }
 
 .button-group .login-link {
