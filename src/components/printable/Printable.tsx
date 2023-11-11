@@ -52,9 +52,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
               <span className="profile-info-list">
                 <Home /> {data?.address}
               </span>
-              <span className="profile-info-list">
-                <Call /> 09554376617
-              </span>
+    
             </div>
             <div className="printable-column-item">
               <h2 className="printable-column-title">Education</h2>
