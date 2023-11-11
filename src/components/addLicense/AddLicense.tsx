@@ -1,3 +1,4 @@
+import "./Addlicence.css"
 import axios from "axios";
 import { useState } from "react";
 import AuthZustand from "../../zustand/AuthZustand";
@@ -104,8 +105,8 @@ const AddLicense = ({ toggleCloseAddLicense }: Prop) => {
         />
       </div>
       <div>
-        <button onClick={handleSaveLicense}>Save</button>
-        <button onClick={toggleCloseAddLicense}>Cancel</button>
+        <button className="save-button" onClick={handleSaveLicense}>Save</button>
+        <button className="cancel-button" onClick={toggleCloseAddLicense}>Cancel</button>
       </div>
     </div>
   );

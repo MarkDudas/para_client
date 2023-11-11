@@ -133,8 +133,8 @@ const AddCareer = ({ toggleCloseAddCareer }: Prop) => {
         />
       </div>
       <div>
-        <button onClick={handleSaveCareer}>Save</button>
-        <button onClick={toggleCloseAddCareer}>Cancel</button>
+        <button className="save-button" onClick={handleSaveCareer}>Save</button>
+        <button className="cancel-button " onClick={toggleCloseAddCareer}>Cancel</button>
       </div>
     </div>
   );

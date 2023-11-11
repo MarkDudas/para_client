@@ -1,0 +1,40 @@
+button{
+    margin-top:20px;
+    
+  }
+  .save-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    background-color: #4caf50; /* Green color */
+    color: white;
+    border: 2px solid #4caf50;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .save-button:hover {
+    background-color: #45a049; /* Darker green color on hover */
+  }
+  /* Cancel Button */
+  .cancel-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #f44336; /* Red color */
+    color: white;
+    border: 2px solid #f44336;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px; /* Add some spacing between the buttons */
+  }
+  
+  .cancel-button:hover {
+    background-color: #d32f2f; /* Darker red color on hover */
+  }

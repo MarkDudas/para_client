@@ -1,3 +1,4 @@
+import "./AddEducation.css"
 import { useState } from "react";
 import moment from "moment";
 import axios from "axios";
@@ -81,8 +82,8 @@ const AddEducation = ({ toggleCloseAddEducation }: Prop) => {
         />
       </div>
       <div>
-        <button onClick={handleSaveEducation}>Save</button>
-        <button onClick={toggleCloseAddEducation}>Cancel</button>
+        <button className="save-button" onClick={handleSaveEducation}>Save</button>
+        <button className="cancel-button"onClick={toggleCloseAddEducation}>Cancel</button>
       </div>
     </div>
   );
