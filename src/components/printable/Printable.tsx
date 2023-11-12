@@ -53,6 +53,14 @@ const Printable = ({ toggleCloseResume }: Prop) => {
       .get(`${import.meta.env.VITE_APP_API_URL}/api/skills/${user}`)
       .then((res) => res.data),
 });
+ // Query for language data
+ const { data: languageData } = useQuery<string[]>({
+  queryKey: ["PrintableLanguage"],
+  queryFn: async () =>
+    await axios
+      .get(`${import.meta.env.VITE_APP_API_URL}/api/language/${user}`)
+      .then((res) => res.data),
+});
 
   // Check if there is any license data
   const hasLicenseData = licenseData && licenseData.length > 0;
@@ -60,7 +68,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
   const hasEducationData = educationData && educationData.length > 0;
   // Check if there is any skills data
   const hasSkillsData = skillsData && skillsData.length > 0;
-
+  const hasLanguageData = languageData && languageData.length > 0;
   return (
     <>
       <div className="printable" ref={componentRef}>
@@ -97,11 +105,13 @@ const Printable = ({ toggleCloseResume }: Prop) => {
             <PrintableSkills />
           </div>
         )}
-            <div className="printable-column-item">
-              <h2 className="printable-column-title">Language</h2>
-              <hr className="printable-hr" />
-              <PrintableLanguage />
-            </div>
+            {hasLanguageData && (
+          <div className="printable-column-item">
+            <h2 className="printable-column-title">Language</h2>
+            <hr className="printable-hr" />
+            <PrintableLanguage />
+          </div>
+        )}
             {hasLicenseData && (
   <section className="printable-column-item">
     <h2 className="printable-column-title">License/Certifications</h2>
