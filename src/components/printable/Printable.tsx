@@ -38,9 +38,18 @@ const Printable = ({ toggleCloseResume }: Prop) => {
         .get(`${import.meta.env.VITE_APP_API_URL}/api/license/${user}`)
         .then((res) => res.data),
   });
+  const { data: educationData } = useQuery<IEducation[]>({
+    queryKey: ["PrintableEducation"],
+    queryFn: async () =>
+      await axios
+        .get(`${import.meta.env.VITE_APP_API_URL}/api/education/${user}`)
+        .then((res) => res.data),
+  });
 
   // Check if there is any license data
   const hasLicenseData = licenseData && licenseData.length > 0;
+  // Check if there is any education data
+  const hasEducationData = educationData && educationData.length > 0;
 
   return (
     <>
@@ -64,11 +73,13 @@ const Printable = ({ toggleCloseResume }: Prop) => {
               </span>
     
             </div>
-            <div className="printable-column-item">
-              <h2 className="printable-column-title">Education</h2>
-              <hr className="printable-hr" />
-              <PrintableEducation />
-            </div>
+            {hasEducationData && (
+  <div className="printable-column-item">
+    <h2 className="printable-column-title">Education</h2>
+    <hr className="printable-hr" />
+    <PrintableEducation />
+  </div>
+)}
             <div className="printable-column-item">
               <h2 className="printable-column-title">Skills</h2>
               <hr className="printable-hr" />

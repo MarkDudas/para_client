@@ -14,6 +14,11 @@ const PrintableEducation = () => {
         .get(`${import.meta.env.VITE_APP_API_URL}/api/education/${user}`)
         .then((res) => res.data),
   });
+  
+  // Check if data is not null or empty
+  if (!data || data.length === 0) {
+    return null; // or display a message indicating no education data
+  }
 
   return (
     <div>
