@@ -15,9 +15,14 @@ const PrintableLicense = () => {
         .then((res) => res.data),
   });
 
+  // If there is no data, don't render the license section
+  if (!data || data.length === 0) {
+    return null;
+  }
+
   return (
     <div>
-      {data?.map((item, key) => (
+      {data.map((item, key) => (
         <div key={key}>
           <h3 className="license-info-title">
             <Circle />

@@ -31,6 +31,16 @@ const Printable = ({ toggleCloseResume }: Prop) => {
         .get(`${import.meta.env.VITE_APP_API_URL}/api/user/${user}`)
         .then((res) => res.data),
   });
+  const { data: licenseData } = useQuery<ILicense[]>({
+    queryKey: ["PrintableLicense"],
+    queryFn: async () =>
+      await axios
+        .get(`${import.meta.env.VITE_APP_API_URL}/api/license/${user}`)
+        .then((res) => res.data),
+  });
+
+  // Check if there is any license data
+  const hasLicenseData = licenseData && licenseData.length > 0;
 
   return (
     <>
@@ -69,13 +79,14 @@ const Printable = ({ toggleCloseResume }: Prop) => {
               <hr className="printable-hr" />
               <PrintableLanguage />
             </div>
-            <div className="printable-column-item">
-              <h2 className="printable-column-title">
-                License/ <br /> Certifications
-              </h2>
-              <hr className="printable-hr" />
-              <PrintableLicense />
-            </div>
+            {hasLicenseData && (
+  <section className="printable-column-item">
+    <h2 className="printable-column-title">License/Certifications</h2>
+    <hr className="printable-hr" />
+    <PrintableLicense />
+  </section>
+)}
+
           </section>
           <section className="printable-column2">
             <div className="printable-column-item">
