@@ -61,6 +61,13 @@ const Printable = ({ toggleCloseResume }: Prop) => {
       .get(`${import.meta.env.VITE_APP_API_URL}/api/language/${user}`)
       .then((res) => res.data),
 });
+const { data: careerData } = useQuery<Career[]>({
+  queryKey: ["PrintableCareer"],
+  queryFn: async () =>
+    await axios
+      .get(`${import.meta.env.VITE_APP_API_URL}/api/career/${user}`)
+      .then((res) => res.data),
+});
 
   // Check if there is any license data
   const hasLicenseData = licenseData && licenseData.length > 0;
@@ -69,6 +76,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
   // Check if there is any skills data
   const hasSkillsData = skillsData && skillsData.length > 0;
   const hasLanguageData = languageData && languageData.length > 0;
+  const hasCareerData = careerData && careerData.length > 0;
   return (
     <>
       <div className="printable" ref={componentRef}>
@@ -127,13 +135,13 @@ const Printable = ({ toggleCloseResume }: Prop) => {
               <hr className="printable-hr" />
               <span>{data?.personalSummary}</span>
             </div>
-            <div>
-              <h2 className="printable-column-title">
-                Professional Experience
-              </h2>
-              <hr className="printable-hr" />
-              <PrintableCareer />
-            </div>
+          {hasCareerData && (
+          <div className="printable-column-item">
+            <h2 className="printable-column-title">Professional Experience</h2>
+            <hr className="printable-hr" />
+            <PrintableCareer />
+          </div>
+        )}
           </section>
         </div>
       </div>

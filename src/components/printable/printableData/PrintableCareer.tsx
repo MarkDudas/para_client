@@ -14,7 +14,10 @@ const PrintableCareer = () => {
         .get(`${import.meta.env.VITE_APP_API_URL}/api/career/${user}`)
         .then((res) => res.data),
   });
-
+// Check if data is not null or empty
+if (!data || data.length === 0) {
+  return null; // or display a message indicating no education data
+}
   return (
     <div>
       {data?.map((item, key) => (
