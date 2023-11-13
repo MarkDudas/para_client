@@ -1,6 +1,6 @@
 import "./Printable.css";
-import { Email, Home, Call } from "@mui/icons-material";
-import { UserInterface } from "../../types/Types";
+import { Email, Home } from "@mui/icons-material";
+import { ICareerHistory, IEducation, ILicense, UserInterface } from "../../types/Types";
 import { useQuery } from "@tanstack/react-query";
 import AuthZustand from "../../zustand/AuthZustand";
 import axios from "axios";
@@ -62,7 +62,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
       .get(`${import.meta.env.VITE_APP_API_URL}/api/language/${user}`)
       .then((res) => res.data),
 });
-const { data: careerData } = useQuery<Career[]>({
+const { data: careerData } = useQuery<ICareerHistory[]>({
   queryKey: ["PrintableCareer"],
   queryFn: async () =>
     await axios
