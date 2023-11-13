@@ -1,4 +1,4 @@
-import "./Addlicence.css"
+import "./AddLicence.css"
 import axios from "axios";
 import { useState } from "react";
 import AuthZustand from "../../zustand/AuthZustand";
