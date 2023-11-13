@@ -31,6 +31,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
         .get(`${import.meta.env.VITE_APP_API_URL}/api/user/${user}`)
         .then((res) => res.data),
   });
+  
   const { data: licenseData } = useQuery<ILicense[]>({
     queryKey: ["PrintableLicense"],
     queryFn: async () =>
@@ -50,7 +51,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
   queryKey: ["PrintableSkills"],
   queryFn: async () =>
     await axios
-      .get(`${import.meta.env.VITE_APP_API_URL}/api/skills/${user}`)
+      .get(`${import.meta.env.VITE_APP_API_URL}/api/skill/${user}`)
       .then((res) => res.data),
 });
  // Query for language data
@@ -130,6 +131,7 @@ const { data: careerData } = useQuery<Career[]>({
 
           </section>
           <section className="printable-column2">
+            
             <div className="printable-column-item">
               <h2 className="printable-column-title">Personal Summary</h2>
               <hr className="printable-hr" />

@@ -15,6 +15,7 @@ const PrintableSkills = () => {
         .get(`${import.meta.env.VITE_APP_API_URL}/api/skill/${user}`)
         .then((res) => res.data),
   });
+  
   if (!data || data.length === 0) {
     return null;
   }
