@@ -89,7 +89,9 @@ export interface IApplicant {
   email: string;
   skills: string[];
   job_applying: string;
+  experience: string;
   rank: number;
+  how: string;
   createdAt: string;
   jobId: string;
   actualJobPosted: string;
