@@ -166,6 +166,9 @@ const ApplicantList = () => {
                   Job Application Match (%)
                 </TableCell>
                 <TableCell sx={{ fontWeight: "bold" }} align="center">
+                  How
+                </TableCell>
+                <TableCell sx={{ fontWeight: "bold" }} align="center">
                   Action Button
                 </TableCell>
               </TableRow>
@@ -193,6 +196,7 @@ const ApplicantList = () => {
                   >
                     {item.rank}%
                   </TableCell>
+                  <TableCell align="center">{item.how}</TableCell>
                   <TableCell align="center">
                     <button
                       className="profile-btn"
