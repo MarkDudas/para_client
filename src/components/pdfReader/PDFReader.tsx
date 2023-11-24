@@ -66,6 +66,8 @@ const PDFReader = ({
         );
 
         console.log(response.data.name);
+        console.log(response.data.how);
+        console.log(response.data.experience);
 
         await axios.post(
           `${import.meta.env.VITE_APP_API_URL}/upload-files`,
