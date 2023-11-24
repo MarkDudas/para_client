@@ -65,8 +65,10 @@ const PDFReader = ({
           JSON.stringify(response.data?.skills?.map((item: string) => item))
         );
 
+        console.log(response.data)
+
         console.log(response.data.name);
-        console.log(response.data.how);
+        console.log("hohoho", response.data.how);
         console.log(response.data.experience);
 
         await axios.post(
