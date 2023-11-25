@@ -106,7 +106,7 @@ const ApplicantList = () => {
             <section className="applicant-search">
               <Search />
               <input
-                placeholder="Search by name, email or experience"
+                placeholder="Search by name or email"
                 type="text"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
