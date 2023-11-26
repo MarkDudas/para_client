@@ -21,7 +21,8 @@ const ApplicantList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedJobPosted, setSelectedJobPosted] = useState<string>("All");
   const [sortOption, setSortOption] = useState<string>("rank-asc");
-  
+  const [experienceFilter, setExperienceFilter] = useState<string>("");
+
   const { data: applicants } = useQuery<IApplicant[] | undefined>({
     queryKey: ["ApplicantList"],
     queryFn: async () =>
@@ -78,24 +79,27 @@ const ApplicantList = () => {
       })
     : applicants;
 
-  const filtered = sortedApplicants
+    const filtered = sortedApplicants
     ? sortedApplicants.filter((item) => {
-        // const genderFilter =
-        //   selectedGender === "All" ||
-        //   (item.gender && item.gender === selectedGender);
         const jobPostedFilter =
           selectedJobPosted === "All" ||
           (item.actualJobPosted && item.actualJobPosted === selectedJobPosted);
-
+  
+        const experienceFilterCondition =
+          !experienceFilter ||
+          (item.experience &&
+            item.experience.toLowerCase().includes(experienceFilter.toLowerCase()));
+  
+        // Fix the placement of the closing parenthesis for the searchTerm condition
         return (
-          // genderFilter &&
           jobPostedFilter &&
           (item?.email?.toLowerCase().includes(searchTerm) ||
-            item.name.toLowerCase().includes(searchTerm)) 
-             
-               );
+            item.name.toLowerCase().includes(searchTerm)) &&
+          experienceFilterCondition
+        );
       })
     : sortedApplicants;
+  
 
   return (
     <>
@@ -110,7 +114,18 @@ const ApplicantList = () => {
                 type="text"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+               
             </section>
+            <section className="applicant-search">
+              <Search />
+              <input
+    type="text"
+    placeholder="Filter by Experience"
+    onChange={(e) => setExperienceFilter(e.target.value)}
+  />
+               
+            </section>
+            
             <section className="applicant-filters">
               <Select
                 value={sortOption}
