@@ -163,7 +163,9 @@ const ApplicantList = () => {
                 <TableCell sx={{ fontWeight: "bold" }} align="center">
                   Application Date
                 </TableCell>
-          
+                <TableCell sx={{ fontWeight: "bold" }} align="center">
+                  Experience
+                </TableCell>
                 <TableCell sx={{ fontWeight: "bold" }} align="center">
                   Job Application Match (%)
                 </TableCell>
@@ -186,7 +188,7 @@ const ApplicantList = () => {
                   <TableCell align="center">
                     {moment(item.createdAt).format("YYYY-MM-DD HH:mma")}
                   </TableCell>
-              
+                  <TableCell align="center">{item.experience}</TableCell>
                   <TableCell
                     align="center"
                     sx={
