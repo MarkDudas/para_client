@@ -10,7 +10,7 @@
   width: 48%;
   margin: 1rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
 }
 
