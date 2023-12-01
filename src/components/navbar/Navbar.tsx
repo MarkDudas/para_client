@@ -88,7 +88,7 @@ const Navbar = () => {
           {userData?.role === "admin" && (
   <>
     <Link to="/admin" style={{ textDecoration: "none", color: "white" }}>
-      <span className="nav-link">Admin</span>
+      <span className="nav-link">Register HR</span>
     </Link>
 
     <Link to="/applicant-chart" style={{ textDecoration: "none", color: "white" }}>
