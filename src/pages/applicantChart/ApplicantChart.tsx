@@ -1,6 +1,7 @@
+// @ts-ignore
+import Chart, { TooltipItem } from "chart.js/auto";
 import React, { useEffect } from "react";
 import axios from "axios";
-import Chart, { TooltipItem } from "chart.js/auto";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "../../components/navbar/Navbar";
 import { IApplicant, IJob } from "../../types/Types";
