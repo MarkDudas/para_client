@@ -94,6 +94,12 @@ const Navbar = () => {
     <Link to="/applicant-chart" style={{ textDecoration: "none", color: "white" }}>
       <span className="nav-link">Analytics</span>
     </Link>
+    <Link
+                  to="/job-list"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <span className="nav-link">Job List</span>
+                </Link>
   </>
 )}
 
