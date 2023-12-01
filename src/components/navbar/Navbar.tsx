@@ -85,14 +85,18 @@ const Navbar = () => {
                 </Link>
               </>
             )}
-            {userData?.role === "admin" && (
-              <Link
-                to="/admin"
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                <span className="nav-link">Admin</span>
-              </Link>
-            )}
+          {userData?.role === "admin" && (
+  <>
+    <Link to="/admin" style={{ textDecoration: "none", color: "white" }}>
+      <span className="nav-link">Admin</span>
+    </Link>
+
+    <Link to="/applicant-chart" style={{ textDecoration: "none", color: "white" }}>
+      <span className="nav-link">Analytics</span>
+    </Link>
+  </>
+)}
+
           </section>
           {/* <section className="nav-action-container"> */}
           <section className={click ? "nav-menu active" : "nav-menu"}>

@@ -18,7 +18,7 @@ import JobList from "./pages/jobList/JobList";
 import ViewJob from "./pages/viewJob/ViewJob";
 import OTP from "./components/otp/OTP";
 import Admin from "./pages/registerHr/Admin";
-
+import ApplicantChart from "./pages/applicantChart/ApplicantChart";
 function App() {
   const user = AuthZustand((state) => state.user);
 
@@ -46,6 +46,7 @@ function App() {
         <Route path="/job/:id" element={<ViewJob />} />
         <Route path="/otp/:email" element={<OTP />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/applicant-chart" element={<ApplicantChart />} />
       </Routes>
       <Toaster position="bottom-center" />
     </>

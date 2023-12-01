@@ -1,0 +1,26 @@
+.container {
+    margin: 3rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    height: 400px;
+    width: 100 vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle box shadow for better visual appeal */
+    border-radius: 8px; /* Adding border-radius for rounded corners */
+  }
+  
+  #jobChart {
+    max-width: 100%;
+    height: auto;
+    width: 100%; /* Ensuring the chart takes full width of its container */
+  }
+  #jobPercentageChart {
+    margin: 3rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
