@@ -1,9 +1,8 @@
-
 .container {
   display: flex;
+  flex-wrap: wrap; /* Allow containers to wrap to the next line on smaller screens */
   justify-content: space-around;
-
-  padding: 10px; /* Add padding to the container */
+  padding: 10px;
 }
 
 .chart-container {
@@ -11,7 +10,7 @@
   width: 48%;
   margin: 1rem;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -19,12 +18,11 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  border: 1px solid black; /* Add a border to each chart container */
-  padding: 10px; /* Add padding to each chart container */
+  border: 1px solid black;
+  padding: 10px;
   height: 400px;
-  align-items: center;
   display: flex;
-  flex-direction: center;
+  align-items: center;
   justify-content: center;
 }
 
@@ -33,18 +31,16 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
- 
 }
 
 .chart-container p {
   font-weight: bold;
-  margin-top: 10px; /* Adjust the margin as needed */
+  margin-top: 10px;
   text-align: center;
 }
 
-/* Optional: Add styles for the label "Total Applicants:" */
-.chart-container .chart-label {
+.chart-label {
   text-align: center;
   font-weight: bold;
-  margin-top: 10px; /* Adjust the margin as needed */
+  margin-top: 10px;
 }

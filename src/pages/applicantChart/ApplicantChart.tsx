@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import Chart from "chart.js/auto";
+import Chart, { TooltipItem } from "chart.js/auto";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "../../components/navbar/Navbar";
 import { IApplicant, IJob } from "../../types/Types";
@@ -11,7 +11,7 @@ const ApplicantChart: React.FC = () => {
     queryKey: ["ApplicantList"],
     queryFn: async () =>
       await axios
-        .get(`${import.meta.env.VITE_APP_API_URL}/api/applicant`)
+        .get<IApplicant[]>(`${import.meta.env.VITE_APP_API_URL}/api/applicant`)
         .then((res) => res.data),
   });
 
@@ -19,7 +19,7 @@ const ApplicantChart: React.FC = () => {
     queryKey: ["JobList"],
     queryFn: async () =>
       await axios
-        .get(`${import.meta.env.VITE_APP_API_URL}/api/job/list`)
+        .get<IJob[]>(`${import.meta.env.VITE_APP_API_URL}/api/job/list`)
         .then((res) => res.data),
   });
 
@@ -27,7 +27,7 @@ const ApplicantChart: React.FC = () => {
     if (applicants) {
       // Code for applicants' chart
       const jobCounts: Record<string, number> = {};
-      applicants.forEach((applicant) => {
+      applicants.forEach((applicant: IApplicant) => {
         const jobTitle = applicant.actualJobPosted;
         jobCounts[jobTitle] = (jobCounts[jobTitle] || 0) + 1;
       });
@@ -77,9 +77,9 @@ const ApplicantChart: React.FC = () => {
       }
 
       const totalJobCounts: Record<string, number> = {};
-      const companyMap: Record<string, string> = {}; // Added to store company information
+      const companyMap: Record<string, string> = {};
 
-      jobs.forEach((job) => {
+      jobs.forEach((job: IJob) => {
         const jobTitle = job.jobTitle;
         totalJobCounts[jobTitle] = (totalJobCounts[jobTitle] || 0) + 1;
         companyMap[jobTitle] = job.company; // Store company information
@@ -87,6 +87,7 @@ const ApplicantChart: React.FC = () => {
 
       const totalJobTitles = Object.keys(totalJobCounts);
       const totalJobCountsData = Object.values(totalJobCounts);
+
       new Chart(totalJobCtx, {
         type: "doughnut",
         data: {
@@ -111,17 +112,18 @@ const ApplicantChart: React.FC = () => {
           plugins: {
             tooltip: {
               callbacks: {
-                title: (tooltipItems: any) => {
-                  return totalJobTitles[tooltipItems[0].index];
+                title: (tooltipItems: TooltipItem<"doughnut">[]) => {
+                  const dataIndex = tooltipItems[0]?.dataIndex;
+                  return dataIndex !== undefined ? totalJobTitles[dataIndex] : "";
                 },
-                label: (context: any) => {
-                  const jobTitle = totalJobTitles[context.dataIndex];
+                label: (context: TooltipItem<"doughnut">) => {
+                  const dataIndex = context.dataIndex;
+                  const jobTitle = totalJobTitles[dataIndex];
                   const jobCount = totalJobCounts[jobTitle];
-             
+
                   return `quantity: ${jobCount} `;
                 },
               },
-             
             },
           },
         },
@@ -133,22 +135,21 @@ const ApplicantChart: React.FC = () => {
     <>
       <Navbar />
       <div className="container">
-      <div className="chart-container">
-        <div className="chart-wrapper">
-          <canvas id="jobChart" />
+        <div className="chart-container">
+          <div className="chart-wrapper">
+            <canvas id="jobChart" />
+          </div>
+          <p className="chart-label">Total Applicants:</p>
         </div>
-        <p className="chart-label">Total Applicants:</p>
-      </div>
-      <div className="chart-container">
-        <div className="chart-wrapper">
-          <canvas id="totalJobChart" />
+        <div className="chart-container">
+          <div className="chart-wrapper">
+            <canvas id="totalJobChart" />
+          </div>
+          <p className="chart-label">Jobs:</p>
         </div>
-        <p className="chart-label">Jobs:</p>
       </div>
-    </div>
     </>
   );
 };
-
 
 export default ApplicantChart;
