@@ -1,11 +1,13 @@
-// @ts-ignore
-import Chart, { TooltipItem } from "chart.js/auto";
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "../../components/navbar/Navbar";
 import { IApplicant, IJob } from "../../types/Types";
 import "./ApplicantChart.css";
+
+// Import chart.js
+import { Chart, registerables, TooltipItem } from "chart.js";
+Chart.register(...registerables);
 
 const ApplicantChart: React.FC = () => {
   const { data: applicants } = useQuery<IApplicant[] | undefined>({
@@ -136,19 +138,19 @@ const ApplicantChart: React.FC = () => {
     <>
       <Navbar />
       <div className="container">
-        <div className="chart-container">
-          <div className="chart-wrapper">
-            <canvas id="jobChart" />
-          </div>
-          <p className="chart-label">Total Applicants:</p>
+      <div className="chart-container">
+        <div className="chart-wrapper">
+          <canvas id="jobChart" />
         </div>
-        <div className="chart-container">
-          <div className="chart-wrapper">
-            <canvas id="totalJobChart" />
-          </div>
-          <p className="chart-label">Jobs:</p>
-        </div>
+        <p className="chart-label">Total Applicants:</p>
       </div>
+      <div className="chart-container">
+        <div className="chart-wrapper">
+          <canvas id="totalJobChart" />
+        </div>
+        <p className="chart-label">Jobs:</p>
+      </div>
+    </div>
     </>
   );
 };
