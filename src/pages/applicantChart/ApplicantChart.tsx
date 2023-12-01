@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import Chart from "chart.js/auto";
 import { useQuery } from "@tanstack/react-query";
-import "./ApplicantChart.css";
 import Navbar from "../../components/navbar/Navbar";
-import { IApplicant } from "../../types/Types";
-
+import { IApplicant, IJob } from "../../types/Types";
+import "./ApplicantChart.css";
 
 const ApplicantChart: React.FC = () => {
   const { data: applicants } = useQuery<IApplicant[] | undefined>({
@@ -16,29 +15,33 @@ const ApplicantChart: React.FC = () => {
         .then((res) => res.data),
   });
 
+  const { data: jobs } = useQuery<IJob[] | undefined>({
+    queryKey: ["JobList"],
+    queryFn: async () =>
+      await axios
+        .get(`${import.meta.env.VITE_APP_API_URL}/api/job/list`)
+        .then((res) => res.data),
+  });
+
   useEffect(() => {
     if (applicants) {
-      // Count the occurrences of each job title
+      // Code for applicants' chart
       const jobCounts: Record<string, number> = {};
       applicants.forEach((applicant) => {
         const jobTitle = applicant.actualJobPosted;
         jobCounts[jobTitle] = (jobCounts[jobTitle] || 0) + 1;
       });
-  
-      // Prepare data for the chart
+
       const jobTitles = Object.keys(jobCounts);
       const jobCountsData = Object.values(jobCounts);
-  
-      // Get the canvas element
+
       const ctx = document.getElementById("jobChart") as HTMLCanvasElement;
-  
-      // Destroy existing chart if it exists
       const existingChart = Chart.getChart(ctx);
+
       if (existingChart) {
         existingChart.destroy();
       }
-  
-      // Create a new bar chart
+
       new Chart(ctx, {
         type: "bar",
         data: {
@@ -57,22 +60,95 @@ const ApplicantChart: React.FC = () => {
           scales: {
             y: {
               beginAtZero: true,
+              max: Math.ceil(Math.max(...jobCountsData)),
             },
           },
         },
       });
     }
-  }, [applicants]);
-  
+
+    if (jobs) {
+      // Code for total jobs doughnut chart
+      const totalJobCtx = document.getElementById("totalJobChart") as HTMLCanvasElement;
+      const existingTotalJobChart = Chart.getChart(totalJobCtx);
+
+      if (existingTotalJobChart) {
+        existingTotalJobChart.destroy();
+      }
+
+      const totalJobCounts: Record<string, number> = {};
+      const companyMap: Record<string, string> = {}; // Added to store company information
+
+      jobs.forEach((job) => {
+        const jobTitle = job.jobTitle;
+        totalJobCounts[jobTitle] = (totalJobCounts[jobTitle] || 0) + 1;
+        companyMap[jobTitle] = job.company; // Store company information
+      });
+
+      const totalJobTitles = Object.keys(totalJobCounts);
+      const totalJobCountsData = Object.values(totalJobCounts);
+      new Chart(totalJobCtx, {
+        type: "doughnut",
+        data: {
+          labels: totalJobTitles,
+          datasets: [
+            {
+              label: "Number of Jobs",
+              data: totalJobCountsData,
+              backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)"],
+              borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)"],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: Math.ceil(Math.max(...totalJobCountsData)),
+            },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                title: (tooltipItems: any) => {
+                  return totalJobTitles[tooltipItems[0].index];
+                },
+                label: (context: any) => {
+                  const jobTitle = totalJobTitles[context.dataIndex];
+                  const jobCount = totalJobCounts[jobTitle];
+             
+                  return `quantity: ${jobCount} `;
+                },
+              },
+             
+            },
+          },
+        },
+      });
+    }
+  }, [applicants, jobs]);
 
   return (
     <>
       <Navbar />
       <div className="container">
-      <canvas id="jobChart" />
+      <div className="chart-container">
+        <div className="chart-wrapper">
+          <canvas id="jobChart" />
+        </div>
+        <p className="chart-label">Total Applicants:</p>
       </div>
+      <div className="chart-container">
+        <div className="chart-wrapper">
+          <canvas id="totalJobChart" />
+        </div>
+        <p className="chart-label">Jobs:</p>
+      </div>
+    </div>
     </>
   );
 };
-export default ApplicantChart;
 
+
+export default ApplicantChart;

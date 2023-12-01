@@ -1,26 +1,50 @@
+
 .container {
-    margin: 3rem;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    height: 400px;
-    width: 100 vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adding a subtle box shadow for better visual appeal */
-    border-radius: 8px; /* Adding border-radius for rounded corners */
-  }
-  
-  #jobChart {
-    max-width: 100%;
-    height: auto;
-    width: 100%; /* Ensuring the chart takes full width of its container */
-  }
-  #jobPercentageChart {
-    margin: 3rem;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
+  display: flex;
+  justify-content: space-around;
+
+  padding: 10px; /* Add padding to the container */
+}
+
+.chart-container {
+  box-sizing: border-box;
+  width: 48%;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.chart-wrapper {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid black; /* Add a border to each chart container */
+  padding: 10px; /* Add padding to each chart container */
+  height: 400px;
+  align-items: center;
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+}
+
+#jobChart,
+#totalJobChart {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+ 
+}
+
+.chart-container p {
+  font-weight: bold;
+  margin-top: 10px; /* Adjust the margin as needed */
+  text-align: center;
+}
+
+/* Optional: Add styles for the label "Total Applicants:" */
+.chart-container .chart-label {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px; /* Adjust the margin as needed */
+}
