@@ -26,7 +26,8 @@
 }
 
 #jobChart,
-#totalJobChart {
+#totalJobChart,
+#applicantMonthChart {
   width: 100%;
   box-sizing: border-box;
   max-height: 100%; /* Ensure charts don't exceed their container height */

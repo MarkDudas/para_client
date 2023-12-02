@@ -69,7 +69,49 @@ const ApplicantChart: React.FC = () => {
         },
       });
     }
-
+    if (applicants) {
+      // Code for applicants' chart
+      const monthCounts: Record<string, number> = {};
+      applicants.forEach((applicant: IApplicant) => {
+        const createdAt = new Date(applicant.createdAt);
+        const monthLabel = `${createdAt.toLocaleString("default", { month: "long" })} ${createdAt.getFullYear()}`;
+        monthCounts[monthLabel] = (monthCounts[monthLabel] || 0) + 1;
+      });
+  
+      const monthLabels = Object.keys(monthCounts);
+      const monthCountsData = Object.values(monthCounts);
+  
+      const ctx = document.getElementById("applicantMonthChart") as HTMLCanvasElement;
+      const existingChart = Chart.getChart(ctx);
+  
+      if (existingChart) {
+        existingChart.destroy();
+      }
+  
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: monthLabels,
+          datasets: [
+            {
+              label: "Number of Applicants",
+              data: monthCountsData,
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: Math.ceil(Math.max(...monthCountsData)),
+            },
+          },
+        },
+      });
+    }
     if (jobs) {
       // Code for total jobs doughnut chart
       const totalJobCtx = document.getElementById("totalJobChart") as HTMLCanvasElement;
@@ -144,6 +186,13 @@ const ApplicantChart: React.FC = () => {
         </div>
         <p className="chart-label">Total Applicants:</p>
       </div>
+      <div className="chart-container">
+  <div className="chart-wrapper">
+    <canvas id="applicantMonthChart" />
+  </div>
+  <p className="chart-label">Applicants per Month:</p>
+</div>
+
       <div className="chart-container">
         <div className="chart-wrapper">
           <canvas id="totalJobChart" />
