@@ -112,6 +112,56 @@ const ApplicantChart: React.FC = () => {
         },
       });
     }
+    if (applicants) {
+      // Filter applicants for today
+      const today = new Date();
+      const todayApplicants = applicants.filter((applicant: IApplicant) => {
+        const createdAt = new Date(applicant.createdAt);
+        return createdAt.toDateString() === today.toDateString();
+      });
+
+      // Code for daily applicants chart
+      const dailyCounts: Record<string, number> = {};
+      todayApplicants.forEach((applicant: IApplicant) => {
+        const createdAt = new Date(applicant.createdAt);
+        const dayLabel = `${createdAt.toTimeString().split(' ')[0]}`;
+        dailyCounts[dayLabel] = (dailyCounts[dayLabel] || 0) + 1;
+      });
+
+      const dailyLabels = Object.keys(dailyCounts);
+      const dailyCountsData = Object.values(dailyCounts);
+
+      const dailyCtx = document.getElementById("applicantDailyChart") as HTMLCanvasElement;
+      const existingDailyChart = Chart.getChart(dailyCtx);
+
+      if (existingDailyChart) {
+        existingDailyChart.destroy();
+      }
+
+      new Chart(dailyCtx, {
+        type: "bar",
+        data: {
+          labels: dailyLabels,
+          datasets: [
+            {
+              label: "Number of Applicants",
+              data: dailyCountsData,
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: Math.ceil(Math.max(...dailyCountsData)),
+            },
+          },
+        },
+      });
+    }
     if (jobs) {
       // Code for total jobs doughnut chart
       const totalJobCtx = document.getElementById("totalJobChart") as HTMLCanvasElement;
@@ -192,6 +242,12 @@ const ApplicantChart: React.FC = () => {
   </div>
   <p className="chart-label">Applicants per Month:</p>
 </div>
+<div className="chart-container">
+          <div className="chart-wrapper">
+            <canvas id="applicantDailyChart" />
+          </div>
+          <p className="chart-label">Applicants Today:</p>
+        </div>
 
       <div className="chart-container">
         <div className="chart-wrapper">
