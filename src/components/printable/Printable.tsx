@@ -85,7 +85,7 @@ const { data: careerData } = useQuery<ICareerHistory[]>({
           <h1 className="printable-name">
             {data?.firstName + " " + data?.lastName}
           </h1>
-          <h3 className="printable-name">Position here</h3>
+     
         </section>
         <div className="printable-body-container">
           <section className="printable-column1">
