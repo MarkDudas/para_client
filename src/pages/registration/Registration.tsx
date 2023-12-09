@@ -22,12 +22,41 @@ const Registration = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+  
 
-    if (password.trim !== confirmPassword.trim) {
-      return alert("Password and Confirm Password not match!");
+    if (
+      !lastName.trim() ||
+      !firstName.trim() ||
+      !email.trim() ||
+      !address.trim() ||
+      !position.trim() ||
+      !password.trim() ||
+      !confirmPassword.trim()
+    ) {
+      toast.error("Please fill in all the fields.");
+      return;
     }
-
+  
+    if (password.trim() !== confirmPassword.trim()) {
+      toast.error("Password and Confirm Password do not match!");
+      return;
+    }
+  
     try {
+      // Check if the email already exists
+      const emailExistsResponse = await axios.post(
+        `${import.meta.env.VITE_APP_API_URL}/api/user/check-email`,
+        {
+          email: email,
+        }
+      );
+  
+      if (emailExistsResponse.data.emailExists) {
+        toast.error("Email already in use. Please use a different email.");
+        return;
+      }
+  
+      // Continue with registration if the email is not in use
       await axios.post(
         `${import.meta.env.VITE_APP_API_URL}/api/user/register`,
         {
@@ -46,10 +75,11 @@ const Registration = () => {
         navigate("/login");
       }, 2000);
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      toast.error("Email already in use. Please use a different email.");
     }
   };
-
+  
   return (
     <div className="registration">
       <div className="registration-container">
@@ -62,6 +92,7 @@ const Registration = () => {
               className="two-columns-input"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              required
             />
           </label>
           <label
@@ -73,6 +104,7 @@ const Registration = () => {
               className="two-columns-input"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              required
             />
           </label>
         </div>
@@ -83,6 +115,7 @@ const Registration = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div className="registration-input-group">
@@ -91,6 +124,7 @@ const Registration = () => {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            required
           />
         </div>
         <div className="registration-input-group">
@@ -99,6 +133,7 @@ const Registration = () => {
             type="text"
             value={position}
             onChange={(e) => setPosition(e.target.value)}
+            required
           />
         </div>
         {/*  */}
@@ -109,6 +144,7 @@ const Registration = () => {
               value={gender}
               onChange={(e) => setGender(e.target.value)}
               className="two-columns-input"
+              required
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -121,6 +157,7 @@ const Registration = () => {
               value={birthday}
               className="two-columns-input"
               onChange={(e) => setBirthday(e.target.value)}
+              required
             />
           </label>
         </div>
@@ -133,6 +170,7 @@ const Registration = () => {
               className="two-columns-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </label>
           <label className="two-columns-label">
@@ -142,6 +180,7 @@ const Registration = () => {
               className="two-columns-input"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
             />
           </label>
         </div>
