@@ -4,6 +4,9 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
+import Joi from "joi";
+
+
 
 const Registration = () => {
   const [lastName, setLastName] = useState<string>("");
@@ -22,7 +25,22 @@ const Registration = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-  
+    const passwordSchema = Joi.object({
+      password: Joi.string()
+        .min(6)
+        .regex(/^(?=.*[A-Z])(?=.*\d)/)
+        .required()
+        .messages({
+          'string.min': 'Password must be at least 6 characters long',
+          'string.pattern.base': 'Password must contain at least one uppercase letter and one digit',
+        }),
+    });
+    const passwordValidationResult = passwordSchema.validate({ password });
+
+  if (passwordValidationResult.error) {
+    toast.error(passwordValidationResult.error.details.map((detail) => detail.message).join(", "));
+    return;
+  }
 
     if (
       !lastName.trim() ||
@@ -56,7 +74,6 @@ const Registration = () => {
         return;
       }
   
-      // Continue with registration if the email is not in use
       await axios.post(
         `${import.meta.env.VITE_APP_API_URL}/api/user/register`,
         {
@@ -76,7 +93,7 @@ const Registration = () => {
       }, 2000);
     } catch (err) {
       console.error(err);
-      toast.error("Email already in use. Please use a different email.");
+      toast.error("Error.");
     }
   };
   
