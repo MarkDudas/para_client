@@ -127,10 +127,14 @@ const Navbar = () => {
                 >
                   {user} <KeyboardArrowDown />
                 </a>
-                {/* </Link> */}
+                <Link
+                  to="/"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
                 <button onClick={clearUser} className="navbar-logout-btn">
                   Logout
                 </button>
+                </Link>
               </div>
             ) : (
               <Link to="/login" style={{ textDecoration: "none" }}>
