@@ -4,8 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import Navbar from "../../components/navbar/Navbar";
 import { IApplicant, IJob } from "../../types/Types";
 import "./ApplicantChart.css";
-
-// Import chart.js
 import { Chart, registerables, TooltipItem } from "chart.js";
 Chart.register(...registerables);
 
@@ -28,7 +26,7 @@ const ApplicantChart: React.FC = () => {
 
   useEffect(() => {
     if (applicants) {
-      // Code for applicants' chart
+     
       const jobCounts: Record<string, number> = {};
       applicants.forEach((applicant: IApplicant) => {
         const jobTitle = applicant.actualJobPosted;
@@ -70,7 +68,7 @@ const ApplicantChart: React.FC = () => {
       });
     }
     if (applicants) {
-      // Code for applicants' chart
+     
       const monthCounts: Record<string, number> = {};
       applicants.forEach((applicant: IApplicant) => {
         const createdAt = new Date(applicant.createdAt);
@@ -114,7 +112,7 @@ const ApplicantChart: React.FC = () => {
     }
    
     if (jobs) {
-      // Code for total jobs doughnut chart
+    
       const totalJobCtx = document.getElementById("totalJobChart") as HTMLCanvasElement;
       const existingTotalJobChart = Chart.getChart(totalJobCtx);
 
