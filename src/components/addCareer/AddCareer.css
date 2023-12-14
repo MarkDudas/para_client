@@ -17,12 +17,6 @@
   gap: 10px;
 }
 
-/* Generic button styles */
-button {
-  margin-top: 20px;
-  cursor: pointer;
-}
-
 /* Save Button */
 .save-button,
 .cancel-button {

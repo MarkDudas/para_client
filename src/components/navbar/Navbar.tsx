@@ -18,6 +18,11 @@ const Navbar = () => {
   const user = AuthZustand((state) => state.user);
   const clearUser = AuthZustand((state) => state.clearUser);
 
+  const logout = () => {
+    clearUser();
+    window.location.reload();
+  };
+
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
@@ -85,24 +90,29 @@ const Navbar = () => {
                 </Link>
               </>
             )}
-          {userData?.role === "admin" && (
-  <>
-    <Link to="/admin" style={{ textDecoration: "none", color: "white" }}>
-      <span className="nav-link">Register HR</span>
-    </Link>
+            {userData?.role === "admin" && (
+              <>
+                <Link
+                  to="/admin"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <span className="nav-link">Register HR</span>
+                </Link>
 
-    <Link to="/applicant-chart" style={{ textDecoration: "none", color: "white" }}>
-      <span className="nav-link">Analytics</span>
-    </Link>
-    <Link
+                <Link
+                  to="/applicant-chart"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <span className="nav-link">Analytics</span>
+                </Link>
+                <Link
                   to="/job-list"
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   <span className="nav-link">Job List</span>
                 </Link>
-  </>
-)}
-
+              </>
+            )}
           </section>
           {/* <section className="nav-action-container"> */}
           <section className={click ? "nav-menu active" : "nav-menu"}>
@@ -127,13 +137,10 @@ const Navbar = () => {
                 >
                   {user} <KeyboardArrowDown />
                 </a>
-                <Link
-                  to="/"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                <button onClick={clearUser} className="navbar-logout-btn">
-                  Logout
-                </button>
+                <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+                  <button onClick={logout} className="navbar-logout-btn">
+                    Logout
+                  </button>
                 </Link>
               </div>
             ) : (

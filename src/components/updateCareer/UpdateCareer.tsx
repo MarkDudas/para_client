@@ -43,7 +43,8 @@ const UpdateCareer = ({ toggleCloseAddCareer, id }: Prop) => {
           companyName: companyName ? companyName : data?.companyName,
           startedDateMonth: startedDate.month,
           startedDateYear: startedDate.year,
-          endedDate: endedDate.month + " " + endedDate.year,
+          endedDateMonth: endedDate.month,
+          endedDateYear: endedDate.year,
           description: description ? description : data?.description,
         }
       );
