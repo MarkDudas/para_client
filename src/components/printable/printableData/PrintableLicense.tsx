@@ -15,7 +15,7 @@ const PrintableLicense = () => {
         .then((res) => res.data),
   });
 
-  // If there is no data, don't render the license section
+ 
   if (!data || data.length === 0) {
     return null;
   }
