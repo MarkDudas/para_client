@@ -46,7 +46,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
         .get(`${import.meta.env.VITE_APP_API_URL}/api/education/${user}`)
         .then((res) => res.data),
   });
- // Query for skills data
+
  const { data: skillsData } = useQuery<string[]>({
   queryKey: ["PrintableSkills"],
   queryFn: async () =>
@@ -54,7 +54,7 @@ const Printable = ({ toggleCloseResume }: Prop) => {
       .get(`${import.meta.env.VITE_APP_API_URL}/api/skill/${user}`)
       .then((res) => res.data),
 });
- // Query for language data
+
  const { data: languageData } = useQuery<string[]>({
   queryKey: ["PrintableLanguage"],
   queryFn: async () =>
@@ -70,11 +70,8 @@ const { data: careerData } = useQuery<ICareerHistory[]>({
       .then((res) => res.data),
 });
 
-  // Check if there is any license data
   const hasLicenseData = licenseData && licenseData.length > 0;
-  // Check if there is any education data
   const hasEducationData = educationData && educationData.length > 0;
-  // Check if there is any skills data
   const hasSkillsData = skillsData && skillsData.length > 0;
   const hasLanguageData = languageData && languageData.length > 0;
   const hasCareerData = careerData && careerData.length > 0;
