@@ -1,14 +1,14 @@
 .job-posting {
   max-width: 700px;
   margin: auto;
-  padding: 20px;
+  padding: 5px;
   border: 1px solid #ccc;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
+  align-items: center; 
 }
 
 .job-posting h1 {
@@ -31,7 +31,7 @@
 
 .form-group input
 {
-  width: 80%;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;

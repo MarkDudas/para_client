@@ -94,7 +94,7 @@ const AddJob = () => {
                 width: "100%",
               }}
             >
-              Upload the image of company/job here..
+              Upload the logo of image here in png, jpeg or jpg format
               <input
                 type="file"
                 id="file-upload"
