@@ -21,7 +21,7 @@ const ApplicantList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedJobPosted, setSelectedJobPosted] = useState<string>("All");
   const [sortOption, setSortOption] = useState<string>("rank-asc");
-  const [experienceFilter, setExperienceFilter] = useState<string>("");
+  // const [experienceFilter, setExperienceFilter] = useState<string>("");
 
   const { data: applicants } = useQuery<IApplicant[] | undefined>({
     queryKey: ["ApplicantList"],
@@ -85,17 +85,17 @@ const ApplicantList = () => {
           selectedJobPosted === "All" ||
           (item.actualJobPosted && item.actualJobPosted === selectedJobPosted);
   
-        const experienceFilterCondition =
-          !experienceFilter ||
-          (item.experience &&
-            item.experience.toLowerCase().includes(experienceFilter.toLowerCase()));
+        // const experienceFilterCondition =
+        //   !experienceFilter ||
+        //   (item.experience &&
+        //     item.experience.toLowerCase().includes(experienceFilter.toLowerCase()));
   
-        // Fix the placement of the closing parenthesis for the searchTerm condition
+        // // Fix the placement of the closing parenthesis for the searchTerm condition
         return (
           jobPostedFilter &&
           (item?.email?.toLowerCase().includes(searchTerm) ||
-            item.name.toLowerCase().includes(searchTerm)) &&
-          experienceFilterCondition
+            item.name.toLowerCase().includes(searchTerm))
+          // experienceFilterCondition
         );
       })
     : sortedApplicants;
@@ -116,7 +116,7 @@ const ApplicantList = () => {
               />
                
             </section>
-            <section className="applicant-search">
+            {/* <section className="applicant-search">
               <Search />
               <input
     type="text"
@@ -124,7 +124,7 @@ const ApplicantList = () => {
     onChange={(e) => setExperienceFilter(e.target.value)}
   />
                
-            </section>
+            </section> */}
             
             <section className="applicant-filters">
               <Select
@@ -178,9 +178,9 @@ const ApplicantList = () => {
                 <TableCell sx={{ fontWeight: "bold" }} align="center">
                   Application Date
                 </TableCell>
-                <TableCell sx={{ fontWeight: "bold" }} align="center">
+                {/* <TableCell sx={{ fontWeight: "bold" }} align="center">
                   Experience
-                </TableCell>
+                </TableCell> */}
                 <TableCell sx={{ fontWeight: "bold" }} align="center">
                   Job Application Match (%)
                 </TableCell>
@@ -203,7 +203,7 @@ const ApplicantList = () => {
                   <TableCell align="center">
                     {moment(item.createdAt).format("YYYY-MM-DD HH:mma")}
                   </TableCell>
-                  <TableCell align="center">{item.experience}</TableCell>
+                  {/* <TableCell align="center">{item.experience}</TableCell> */}
                   <TableCell
                     align="center"
                     sx={
