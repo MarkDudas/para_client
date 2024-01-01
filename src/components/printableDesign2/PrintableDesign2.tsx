@@ -125,7 +125,7 @@ const PrintableDesign2 = ({ toggleCloseResume }: Prop) => {
                   borderRadius: "10px",
                 }}
               />
-              Email
+              {data?.email}
             </span>
             <span className="printableDesign2-header-right-info">
               <Call
@@ -136,7 +136,7 @@ const PrintableDesign2 = ({ toggleCloseResume }: Prop) => {
                   borderRadius: "10px",
                 }}
               />
-              Contact Number
+              {data?.contactNumber}
             </span>
             <span className="printableDesign2-header-right-info">
               <LocationOn
@@ -147,7 +147,7 @@ const PrintableDesign2 = ({ toggleCloseResume }: Prop) => {
                   borderRadius: "10px",
                 }}
               />
-              Address
+              {data?.address}
             </span>
           </div>
         </section>
