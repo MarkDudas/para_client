@@ -5,8 +5,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import Joi from "joi";
-
-
+import { PatternFormat } from "react-number-format";
 
 const Registration = () => {
   const [lastName, setLastName] = useState<string>("");
@@ -20,6 +19,7 @@ const Registration = () => {
   const [birthday, setBirthday] = useState<string>(
     moment().format("YYYY-MM-DD")
   );
+  const [contactNumber, setContactNumber] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -31,16 +31,21 @@ const Registration = () => {
         .regex(/^(?=.*[A-Z])(?=.*\d)/)
         .required()
         .messages({
-          'string.min': 'Password must be at least 6 characters long',
-          'string.pattern.base': 'Password must contain at least one uppercase letter and one digit',
+          "string.min": "Password must be at least 6 characters long",
+          "string.pattern.base":
+            "Password must contain at least one uppercase letter and one digit",
         }),
     });
     const passwordValidationResult = passwordSchema.validate({ password });
 
-  if (passwordValidationResult.error) {
-    toast.error(passwordValidationResult.error.details.map((detail) => detail.message).join(", "));
-    return;
-  }
+    if (passwordValidationResult.error) {
+      toast.error(
+        passwordValidationResult.error.details
+          .map((detail) => detail.message)
+          .join(", ")
+      );
+      return;
+    }
 
     if (
       !lastName.trim() ||
@@ -54,12 +59,12 @@ const Registration = () => {
       toast.error("Please fill in all the fields.");
       return;
     }
-  
+
     if (password.trim() !== confirmPassword.trim()) {
       toast.error("Password and Confirm Password do not match!");
       return;
     }
-  
+
     try {
       // Check if the email already exists
       const emailExistsResponse = await axios.post(
@@ -68,12 +73,12 @@ const Registration = () => {
           email: email,
         }
       );
-  
+
       if (emailExistsResponse.data.emailExists) {
         toast.error("Email already in use. Please use a different email.");
         return;
       }
-  
+
       await axios.post(
         `${import.meta.env.VITE_APP_API_URL}/api/user/register`,
         {
@@ -85,6 +90,7 @@ const Registration = () => {
           gender: gender,
           position: position,
           password: password,
+          contactNumber: contactNumber,
         }
       );
       toast.success("Successful Registration!");
@@ -96,7 +102,7 @@ const Registration = () => {
       toast.error("Error.");
     }
   };
-  
+
   return (
     <div className="registration">
       <div className="registration-container">
@@ -135,6 +141,40 @@ const Registration = () => {
             required
           />
         </div>
+
+        <div className="registration-input-group">
+          <label>Contact Number</label>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              border: "2px solid black",
+              paddingLeft: "15px",
+              height: "40px",
+              borderRadius: "5px",
+              padding: "0 10px",
+              width: "90%",
+            }}
+          >
+            <span style={{ color: "#BEBEBE" }}>09</span>
+            <PatternFormat
+              format="##-###-####"
+              mask="_"
+              style={{
+                outline: "none",
+                border: "none",
+                height: "40px",
+                fontSize: "18px",
+                paddingLeft: "5px",
+              }}
+              onValueChange={(values) => {
+                const { value } = values;
+                setContactNumber(value);
+              }}
+            />
+          </div>
+        </div>
+
         <div className="registration-input-group">
           <label>Home Full Address</label>
           <input

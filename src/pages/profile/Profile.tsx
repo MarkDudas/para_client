@@ -3,7 +3,7 @@ import { UserInterface } from "../../types/Types";
 import "./Profile.css";
 import { useQuery } from "@tanstack/react-query";
 import AuthZustand from "../../zustand/AuthZustand";
-import { Place, Email } from "@mui/icons-material";
+import { Place, Email, Call } from "@mui/icons-material";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@mui/material";
 import AddCareer from "../../components/addCareer/AddCareer";
@@ -19,6 +19,8 @@ import AddLanguage from "../../components/addLanguage/AddLanguage";
 import AddSkills from "../../components/addSkills/AddSkills";
 import Printable from "../../components/printable/Printable";
 import Navbar from "../../components/navbar/Navbar";
+import PrintableDesign2 from "../../components/printableDesign2/PrintableDesign2";
+import UploadProfilePic from "../../components/uploadProfilePic/UploadProfilePic";
 
 const Profile = () => {
   const user = AuthZustand((state) => state.user);
@@ -27,6 +29,7 @@ const Profile = () => {
   const [openAddLicense, setOpenAddLicense] = useState<boolean>(false);
   const [personalSummary, setPersonalSummary] = useState<string>("");
   const [openResume, setOpenResume] = useState<boolean>(false);
+  const [design, setDesign] = useState<string>("design1");
 
   const { data } = useQuery<UserInterface>({
     queryKey: ["Profile"],
@@ -81,13 +84,19 @@ const Profile = () => {
       <div className="profile-container">
         <section className="profile-header">
           <div className="profile-header-info-container">
-            <h1>{data?.firstName + " " + data?.lastName}</h1>
-            <span className="profile-info-list">
-              <Place /> {data?.address}
-            </span>
-            <span className="profile-info-list">
-              <Email /> {data?.email}
-            </span>
+            <UploadProfilePic />
+            <div className="profile-header-info-right">
+              <h1>{data?.firstName + " " + data?.lastName}</h1>
+              <span className="profile-info-list">
+                <Place /> {data?.address}
+              </span>
+              <span className="profile-info-list">
+                <Email /> {data?.email}
+              </span>
+              <span className="profile-info-list">
+                <Call /> 09{data?.contactNumber}
+              </span>
+            </div>
           </div>
         </section>
       </div>
@@ -191,8 +200,41 @@ const Profile = () => {
         </DialogContent>
       </Dialog>
       <Dialog open={openResume} onClose={toggleCloseResume} maxWidth="lg">
-        <DialogContent sx={{ overflowX: "hidden" }}>
-          <Printable toggleCloseResume={toggleCloseResume} />
+        <DialogContent
+          sx={{
+            overflowX: "hidden",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <div className="profile-btn-modal-container">
+            <button
+              className={
+                design === "design1"
+                  ? "profile-btn-modal-active"
+                  : "profile-btn-modal"
+              }
+              onClick={() => setDesign("design1")}
+            >
+              Design 1
+            </button>
+            <button
+              className={
+                design === "design2"
+                  ? "profile-btn-modal-active"
+                  : "profile-btn-modal"
+              }
+              onClick={() => setDesign("design2")}
+            >
+              Design 2
+            </button>
+          </div>
+          {design === "design1" ? (
+            <Printable toggleCloseResume={toggleCloseResume} />
+          ) : (
+            <PrintableDesign2 toggleCloseResume={toggleCloseResume} />
+          )}
         </DialogContent>
       </Dialog>
     </div>

@@ -5,6 +5,9 @@ import Navbar from "../../components/navbar/Navbar";
 import { IApplicant, IJob } from "../../types/Types";
 import "./ApplicantChart.css";
 import { Chart, registerables, TooltipItem } from "chart.js";
+import LineChartTopJob from "../../components/lineChart/LineChartTopJob";
+import LineChartTopJobToday from "../../components/lineChart/LineChartTopJobToday";
+
 Chart.register(...registerables);
 
 const ApplicantChart: React.FC = () => {
@@ -26,7 +29,6 @@ const ApplicantChart: React.FC = () => {
 
   useEffect(() => {
     if (applicants) {
-     
       const jobCounts: Record<string, number> = {};
       applicants.forEach((applicant: IApplicant) => {
         const jobTitle = applicant.actualJobPosted;
@@ -68,24 +70,27 @@ const ApplicantChart: React.FC = () => {
       });
     }
     if (applicants) {
-     
       const monthCounts: Record<string, number> = {};
       applicants.forEach((applicant: IApplicant) => {
         const createdAt = new Date(applicant.createdAt);
-        const monthLabel = `${createdAt.toLocaleString("default", { month: "long" })} ${createdAt.getFullYear()}`;
+        const monthLabel = `${createdAt.toLocaleString("default", {
+          month: "long",
+        })} ${createdAt.getFullYear()}`;
         monthCounts[monthLabel] = (monthCounts[monthLabel] || 0) + 1;
       });
-  
+
       const monthLabels = Object.keys(monthCounts);
       const monthCountsData = Object.values(monthCounts);
-  
-      const ctx = document.getElementById("applicantMonthChart") as HTMLCanvasElement;
+
+      const ctx = document.getElementById(
+        "applicantMonthChart"
+      ) as HTMLCanvasElement;
       const existingChart = Chart.getChart(ctx);
-  
+
       if (existingChart) {
         existingChart.destroy();
       }
-  
+
       new Chart(ctx, {
         type: "bar",
         data: {
@@ -110,10 +115,11 @@ const ApplicantChart: React.FC = () => {
         },
       });
     }
-   
+
     if (jobs) {
-    
-      const totalJobCtx = document.getElementById("totalJobChart") as HTMLCanvasElement;
+      const totalJobCtx = document.getElementById(
+        "totalJobChart"
+      ) as HTMLCanvasElement;
       const existingTotalJobChart = Chart.getChart(totalJobCtx);
 
       if (existingTotalJobChart) {
@@ -140,8 +146,16 @@ const ApplicantChart: React.FC = () => {
             {
               label: "Number of Jobs",
               data: totalJobCountsData,
-              backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)"],
-              borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)"],
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+              ],
               borderWidth: 1,
             },
           ],
@@ -158,7 +172,9 @@ const ApplicantChart: React.FC = () => {
               callbacks: {
                 title: (tooltipItems: TooltipItem<"doughnut">[]) => {
                   const dataIndex = tooltipItems[0]?.dataIndex;
-                  return dataIndex !== undefined ? totalJobTitles[dataIndex] : "";
+                  return dataIndex !== undefined
+                    ? totalJobTitles[dataIndex]
+                    : "";
                 },
                 label: (context: TooltipItem<"doughnut">) => {
                   const dataIndex = context.dataIndex;
@@ -179,27 +195,28 @@ const ApplicantChart: React.FC = () => {
     <>
       <Navbar />
       <div className="container">
-      <div className="chart-container">
-        <div className="chart-wrapper">
-          <canvas id="jobChart" />
+        <div className="chart-container">
+          <div className="chart-wrapper">
+            <canvas id="jobChart" />
+          </div>
+          <p className="chart-label">Total Applicants:</p>
         </div>
-        <p className="chart-label">Total Applicants:</p>
-      </div>
-      <div className="chart-container">
-  <div className="chart-wrapper">
-    <canvas id="applicantMonthChart" />
-  </div>
-  <p className="chart-label">Applicants per Month:</p>
-</div>
-
-
-      <div className="chart-container">
-        <div className="chart-wrapper">
-          <canvas id="totalJobChart" />
+        <div className="chart-container">
+          <div className="chart-wrapper">
+            <canvas id="applicantMonthChart" />
+          </div>
+          <p className="chart-label">Applicants per Month:</p>
         </div>
-        <p className="chart-label">Jobs:</p>
+        <div className="chart-container">
+          <div className="chart-wrapper">
+            <canvas id="totalJobChart" />
+          </div>
+          <p className="chart-label">Jobs:</p>
+        </div>
+        <LineChartTopJob />
+
+        <LineChartTopJobToday />
       </div>
-    </div>
     </>
   );
 };

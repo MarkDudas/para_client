@@ -18,9 +18,14 @@ const Navbar = () => {
   const user = AuthZustand((state) => state.user);
   const clearUser = AuthZustand((state) => state.clearUser);
 
+  const navigate = useNavigate();
+
   const logout = () => {
     clearUser();
-    window.location.reload();
+    navigate("/");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const [click, setClick] = useState(false);
@@ -38,8 +43,6 @@ const Navbar = () => {
     };
     fetch();
   }, []);
-
-  const navigate = useNavigate();
 
   const handleGoToProfile = () => {
     if (userData?.role === "user") {
@@ -110,6 +113,12 @@ const Navbar = () => {
                   style={{ textDecoration: "none", color: "white" }}
                 >
                   <span className="nav-link">Job List</span>
+                </Link>
+                <Link
+                  to="/company-list"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <span className="nav-link">Company List</span>
                 </Link>
               </>
             )}

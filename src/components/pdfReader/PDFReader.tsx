@@ -60,12 +60,13 @@ const PDFReader = ({
         formData.append("rank", String(response.data?.rank));
         formData.append("experience", response.data?.experience);
         formData.append("how", response.data?.how);
+        formData.append("jobDescription", jobDescription);
         formData.append(
           "skills",
           JSON.stringify(response.data?.skills?.map((item: string) => item))
         );
 
-        console.log(response.data)
+        console.log(response.data);
 
         console.log(response.data.name);
         console.log("hohoho", response.data.how);

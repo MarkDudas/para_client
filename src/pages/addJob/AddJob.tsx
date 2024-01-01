@@ -1,63 +1,90 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddJob.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Navbar from "../../components/navbar/Navbar";
+import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { ICompany } from "../../types/Types";
 
 const AddJob = () => {
   const [title, setTitle] = useState("");
-  const [comp, setComp] = useState("");
-  const [desc, setDesc] = useState("");
-  const [loc, setLoc] = useState("");
+  const [selectedCompanyId, setSelectedCompanyId] = useState("");
+  const [jobDesc, setJobDesc] = useState("");
+  const [jobResponsibilities, setJobResponsibilities] = useState<string>("");
+  const [jobQualifications, setJobQualifications] = useState<string>("");
   const [salaryFrom, setSalaryFrom] = useState(0);
   const [salaryTo, setSalaryTo] = useState(0);
-  const [ImageFile, setImageFile] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [selectedCompanyData, setSelectedCompanyData] = useState<ICompany>();
 
-  const fileTypeChecking = (e: any) => {
-    var fileInput = document.getElementById("file-upload") as HTMLInputElement;
-    var filePath = fileInput.value;
+  const navigate = useNavigate();
 
-    // Allowing file type
-    var allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
-    // |\.pdf|\.tex|\.txt|\.rtf|\.wps|\.wks|\.wpd
+  const { data: companyList } = useQuery<ICompany[]>({
+    queryKey: ["CompanyList"],
+    queryFn: async () =>
+      await axios
+        .get(`${import.meta.env.VITE_APP_API_URL}/api/company`)
+        .then((res) => res.data),
+  });
 
-    if (!allowedExtensions.exec(filePath)) {
-      alert("Invalid file type");
-      fileInput.value = "";
-      return false;
-    }
-
-    setImageFile(e.target.files[0]);
-  };
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await axios.get(
+        `${
+          import.meta.env.VITE_APP_API_URL
+        }/api/company/single/${selectedCompanyId}`
+      );
+      setSelectedCompanyData(res.data);
+    };
+    fetch();
+  }, [selectedCompanyId]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     e.preventDefault();
-    const data = new FormData();
-    data.append("file", ImageFile);
-    data.append("upload_preset", "t6odcavz");
-    const uploadRes = await axios.post(
-      "https://api.cloudinary.com/v1_1/paraagency/image/upload",
-      data
-    );
-    const { url } = uploadRes.data;
 
-    await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/job/create`, {
-      jobTitle: title,
-      company: comp,
-      jobDescription: desc,
-      location: loc,
-      monthlySalaryFrom: salaryFrom,
-      monthlySalaryTo: salaryTo,
-      companyImageUrl: url,
-    });
-    setTitle("");
-    setComp("");
-    setDesc("");
-    setLoc("");
-    setSalaryFrom(0);
-    setSalaryTo(0);
-    setImageFile("");
-    toast.success("Successful created job posting!");
+    if (selectedCompanyId === "") {
+      return alert("Please select Company.");
+    }
+
+    if (salaryFrom === 0) {
+      return alert("Please put valid Salary Starts from");
+    }
+
+    if (salaryTo === 0) {
+      return alert("Please put valid Salary Ends to");
+    }
+
+    try {
+      await axios.post(`${import.meta.env.VITE_APP_API_URL}/api/job/create`, {
+        jobTitle: title,
+        company: selectedCompanyData?.companyName,
+        jobDescription: jobDesc,
+        jobResponsibilities: jobResponsibilities,
+        jobQualifications: jobQualifications,
+        location: selectedCompanyData?.companyLocation,
+        monthlySalaryFrom: salaryFrom,
+        monthlySalaryTo: salaryTo,
+        companyImageUrl: selectedCompanyData?.companyImage,
+      });
+      setTitle("");
+      setSelectedCompanyId("");
+      setJobDesc("");
+      setJobResponsibilities("");
+      setJobQualifications("");
+      setSalaryFrom(0);
+      setSalaryTo(0);
+
+      setLoading(false);
+      toast.success("Successful created job posting!");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -66,44 +93,15 @@ const AddJob = () => {
       <div className="job-posting" style={{ marginTop: "10px" }}>
         <h1>Add a Job Posting</h1>
         <form onSubmit={handleSubmit}>
-          <div
-            className="form-group"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <img
-              src={
-                ImageFile
-                  ? URL.createObjectURL(
-                      new Blob([ImageFile], { type: "image/jpeg" })
-                    )
-                  : ""
-              }
-              style={{ width: "200px", height: "200px", marginBottom: "10px" }}
-              alt="AddImage"
-            />
-            <label
-              htmlFor="file-upload"
-              style={{
-                border: "1px solid black",
-                textAlign: "center",
-                padding: "10px 0",
-                width: "100%",
-              }}
-            >
-              Upload the logo of image here in png, jpeg or jpg format
-              <input
-                type="file"
-                id="file-upload"
-                onChange={fileTypeChecking}
-                style={{ display: "none" }}
-                required
-              />
-            </label>
-          </div>
+          <img
+            src={
+              selectedCompanyData?.companyImage
+                ? selectedCompanyData.companyImage
+                : "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+            }
+            style={{ width: "90%", height: "300px", marginBottom: "10px" }}
+            alt="AddImage"
+          />
           <div className="form-group">
             <label htmlFor="title">Job Title</label>
             <input
@@ -116,42 +114,69 @@ const AddJob = () => {
           </div>
           <div className="form-group">
             <label htmlFor="company">Company</label>
-            <input
-              type="text"
-              id="company"
-              value={comp}
-              onChange={(e) => setComp(e.target.value)}
+
+            <select
+              onChange={(e) => setSelectedCompanyId(e.target.value)}
               required
-            />
+            >
+              <option value="">Select Company</option>
+              {companyList?.map((item) => (
+                <option key={item._id} value={item._id}>
+                  {item.companyName}
+                </option>
+              ))}
+            </select>
           </div>
+
           <div className="form-group">
-            <label htmlFor="description">
-              Job Description / Job Responsibilities / Qualifications:{" "}
-            </label>
+            <label htmlFor="description">Job Description</label>
             <textarea
-              id="description"
+              id="Job Description"
               rows={10}
-              value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+              value={jobDesc}
+              onChange={(e) => setJobDesc(e.target.value)}
               required
             />
           </div>
+
+          <div className="form-group">
+            <label htmlFor="description">Job Responsibilities</label>
+            <textarea
+              id="Job Responsibilities"
+              rows={10}
+              value={jobResponsibilities}
+              onChange={(e) => setJobResponsibilities(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="description">Job Qualifications</label>
+            <textarea
+              id="Job Qualifications"
+              rows={10}
+              value={jobQualifications}
+              onChange={(e) => setJobQualifications(e.target.value)}
+              required
+            />
+          </div>
+
           <div className="form-group">
             <label htmlFor="location">Location</label>
             <input
               type="text"
               id="location"
-              value={loc}
-              onChange={(e) => setLoc(e.target.value)}
+              value={selectedCompanyData?.companyLocation}
+              disabled
               required
             />
           </div>
           <div className="form-group">
             <label htmlFor="salary">Salary Starts from: </label>
             <input
-              type="text"
+              type="number"
               id="salary"
-              value={salaryFrom}
+              defaultValue={salaryFrom}
               onChange={(e) => setSalaryFrom(parseInt(e.target.value))}
               required
             />
@@ -159,15 +184,15 @@ const AddJob = () => {
           <div className="form-group">
             <label htmlFor="salary">Salary Ends to:</label>
             <input
-              type="text"
+              type="number"
               id="salary"
-              value={salaryTo}
+              defaultValue={salaryTo}
               onChange={(e) => setSalaryTo(parseInt(e.target.value))}
               required
             />
           </div>
           <button className="profile-btn" type="submit">
-            Submit
+            {loading ? "Please wait.." : "Submit"}
           </button>
         </form>
       </div>

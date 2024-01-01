@@ -19,22 +19,13 @@ import ViewJob from "./pages/viewJob/ViewJob";
 import OTP from "./components/otp/OTP";
 import Admin from "./pages/registerHr/Admin";
 import ApplicantChart from "./pages/applicantChart/ApplicantChart";
+import CompanyList from "./pages/companyList/CompanyList";
 function App() {
   const user = AuthZustand((state) => state.user);
-
-  // const location = useLocation();
 
   return (
     <>
       <Routes>
-        {/* <Route
-          index
-          element={
-            location.pathname !== "/login" &&
-            location.pathname !== "/registration" &&
-            location.pathname !== "/otp/:email" && <Navbar />
-          }
-        /> */}
         <Route path="/" element={<Home />} />
         <Route path="/add-job" element={<AddJob />} />
         <Route path="/login" element={!user && <Login />} />
@@ -47,6 +38,7 @@ function App() {
         <Route path="/otp/:email" element={<OTP />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/applicant-chart" element={<ApplicantChart />} />
+        <Route path="/company-list" element={<CompanyList />} />
       </Routes>
       <Toaster position="bottom-center" />
     </>

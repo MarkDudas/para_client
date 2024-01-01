@@ -8,8 +8,10 @@ import {
   TableRow,
   Select,
   MenuItem,
+  Dialog,
+  DialogContent,
 } from "@mui/material";
-import { Search } from "@mui/icons-material";
+import { Search, Close } from "@mui/icons-material";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { IApplicant, IJob } from "../../types/Types";
@@ -21,6 +23,10 @@ const ApplicantList = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedJobPosted, setSelectedJobPosted] = useState<string>("All");
   const [sortOption, setSortOption] = useState<string>("rank-asc");
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [selectedJobDescription, setSelectedJobDescription] =
+    useState<string>("");
+  const [selectedHow, setSelectedHow] = useState<string>("");
   // const [experienceFilter, setExperienceFilter] = useState<string>("");
 
   const { data: applicants } = useQuery<IApplicant[] | undefined>({
@@ -79,27 +85,48 @@ const ApplicantList = () => {
       })
     : applicants;
 
-    const filtered = sortedApplicants
+  const jobsThatAreNotArchived = jobPostings?.filter(
+    (item) => item.isArchive === false
+  );
+
+  console.log("jobsTHatAre not archived", jobsThatAreNotArchived);
+
+  const filtered = sortedApplicants
     ? sortedApplicants.filter((item) => {
         const jobPostedFilter =
           selectedJobPosted === "All" ||
           (item.actualJobPosted && item.actualJobPosted === selectedJobPosted);
-  
+
         // const experienceFilterCondition =
         //   !experienceFilter ||
         //   (item.experience &&
         //     item.experience.toLowerCase().includes(experienceFilter.toLowerCase()));
-  
+
+        const isJobNotArchived =
+          jobsThatAreNotArchived &&
+          jobsThatAreNotArchived.some(
+            (job) => job.jobTitle === item.actualJobPosted
+          );
+
         // // Fix the placement of the closing parenthesis for the searchTerm condition
         return (
           jobPostedFilter &&
+          isJobNotArchived &&
           (item?.email?.toLowerCase().includes(searchTerm) ||
             item.name.toLowerCase().includes(searchTerm))
-          // experienceFilterCondition
         );
       })
     : sortedApplicants;
-  
+
+  const toggleOpenModal = (jobDescription: string, how: string) => {
+    setSelectedJobDescription(jobDescription);
+    setSelectedHow(how);
+    setOpenModal(true);
+  };
+
+  const toggleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <>
@@ -114,7 +141,6 @@ const ApplicantList = () => {
                 type="text"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-               
             </section>
             {/* <section className="applicant-search">
               <Search />
@@ -125,7 +151,7 @@ const ApplicantList = () => {
   />
                
             </section> */}
-            
+
             <section className="applicant-filters">
               <Select
                 value={sortOption}
@@ -137,16 +163,6 @@ const ApplicantList = () => {
                 <MenuItem value="rank-asc">Sort by Rank (Ascending)</MenuItem>
                 <MenuItem value="rank-desc">Sort by Rank (Descending)</MenuItem>
               </Select>
-
-              {/* <Select
-                sx={{ backgroundColor: "#f2f2f2" }}
-                value={selectedGender}
-                onChange={(e) => setSelectedGender(e.target.value)}
-              >
-                <MenuItem value="All">All Genders</MenuItem>
-                <MenuItem value="Male">Male</MenuItem>
-                <MenuItem value="Female">Female</MenuItem>
-              </Select> */}
 
               <Select
                 sx={{ backgroundColor: "#f2f2f2" }}
@@ -216,7 +232,16 @@ const ApplicantList = () => {
                   >
                     {item.rank}%
                   </TableCell>
-                  <TableCell align="center">{item.how}</TableCell>
+                  <TableCell align="center">
+                    <button
+                      className="applicant-list-modal-btn"
+                      onClick={() =>
+                        toggleOpenModal(item.jobDescription, item.how)
+                      }
+                    >
+                      See Job Description and "How" it is rank
+                    </button>
+                  </TableCell>
                   <TableCell align="center">
                     <button
                       className="profile-btn"
@@ -231,6 +256,23 @@ const ApplicantList = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        <Dialog open={openModal} onClose={toggleCloseModal}>
+          <DialogContent>
+            <div className="applicant-list-modal-container">
+              <button className="applicant-list-modal-close-btn">
+                <Close />
+              </button>
+              <label>
+                Job Description:
+                <span>{selectedJobDescription}</span>
+              </label>
+              <label>
+                How:
+                <span>{selectedHow}</span>
+              </label>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </>
   );

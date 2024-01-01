@@ -1,0 +1,30 @@
+.printableData {
+  width: 70%;
+  margin-top: 20px;
+}
+
+.printableDesign2-jobTitle {
+  margin: 0;
+  padding: 0;
+}
+
+.printableDesign2-date-duration {
+  color: #fcc203;
+  font-style: italic;
+  font-size: 14px;
+}
+
+.printableData-skills-container {
+  padding: 5px 10px;
+  background-color: #aaafb3;
+}
+
+.printableData-licenseName {
+  color: #ffffff;
+}
+
+.printableData-license-info-container {
+  font-style: italic;
+  font-size: 15px;
+  color: #ffffff;
+}

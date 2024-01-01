@@ -38,6 +38,8 @@ export interface UserInterface {
   role: string;
   createdAt: string;
   personalSummary: string;
+  contactNumber: string;
+  profileImage: string;
 }
 
 export interface ICareerHistory {
@@ -89,6 +91,7 @@ export interface IApplicant {
   email: string;
   skills: string[];
   job_applying: string;
+  jobDescription: string;
   experience: string;
   rank: number;
   how: string;
@@ -98,4 +101,12 @@ export interface IApplicant {
   pdfFile: string;
   gender: string;
   birthday: string;
+}
+
+export interface ICompany {
+  _id: string;
+  companyName: string;
+  companyLocation: string;
+  companyImage: string;
+  createdAt: string;
 }
