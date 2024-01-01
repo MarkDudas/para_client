@@ -182,7 +182,7 @@ const PrintableDesign2 = ({ toggleCloseResume }: Prop) => {
                       borderRadius: "10px",
                     }}
                   />
-                  WORK EXPERIENCE
+                  Education
                 </h2>
                 <PrintableEducation />
               </div>
