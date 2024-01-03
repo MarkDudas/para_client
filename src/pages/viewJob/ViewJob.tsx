@@ -43,7 +43,12 @@ const ViewJob = () => {
               </span>
             )}
             <span>Posted: {moment(data?.createdAt).format("YYYY-MM-DD")}</span>
+            <h3 style={{ paddingLeft: 0 }}>Job Description: </h3>
             <span>{data?.jobDescription}</span>
+            <h3 style={{ paddingLeft: 0 }}>Job Responsibilities: </h3>
+            <span>{data?.jobResponsibilities}</span>
+            <h3 style={{ paddingLeft: 0 }}>Job Qualification: </h3>
+            <span>{data?.jobQualifications}</span>
           </div>
         </div>
       </div>

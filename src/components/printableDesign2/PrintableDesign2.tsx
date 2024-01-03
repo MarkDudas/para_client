@@ -6,6 +6,7 @@ import {
   Work,
   Stars,
   WorkspacePremium,
+  ContactPhone,
 } from "@mui/icons-material";
 import {
   ICareerHistory,
@@ -116,39 +117,52 @@ const PrintableDesign2 = ({ toggleCloseResume }: Prop) => {
             </section>
           </div>
           <div className="printableDesign2-header-right">
-            <span className="printableDesign2-header-right-info">
-              <Email
-                sx={{
-                  padding: "7px",
-                  backgroundColor: "#ffffff",
-                  color: "#323b4c",
-                  borderRadius: "10px",
-                }}
-              />
-              {data?.email}
-            </span>
-            <span className="printableDesign2-header-right-info">
-              <Call
-                sx={{
-                  padding: "7px",
-                  backgroundColor: "#ffffff",
-                  color: "#323b4c",
-                  borderRadius: "10px",
-                }}
-              />
-              {data?.contactNumber}
-            </span>
-            <span className="printableDesign2-header-right-info">
-              <LocationOn
-                sx={{
-                  padding: "7px",
-                  backgroundColor: "#ffffff",
-                  color: "#323b4c",
-                  borderRadius: "10px",
-                }}
-              />
-              {data?.address}
-            </span>
+            <div className="printableDesign2-column-item">
+              <h2 className="printableDesign2-column-title">
+                <ContactPhone
+                  sx={{
+                    padding: "7px",
+                    backgroundColor: "#ffffff",
+                    color: "#323b4c",
+                    borderRadius: "10px",
+                  }}
+                />
+                CONTACT INFORMATION
+              </h2>
+              <span className="printableDesign2-header-right-info">
+                <Email
+                  sx={{
+                    padding: "7px",
+                    backgroundColor: "#ffffff",
+                    color: "#323b4c",
+                    borderRadius: "10px",
+                  }}
+                />
+                {data?.email}
+              </span>
+              <span className="printableDesign2-header-right-info">
+                <Call
+                  sx={{
+                    padding: "7px",
+                    backgroundColor: "#ffffff",
+                    color: "#323b4c",
+                    borderRadius: "10px",
+                  }}
+                />
+                09{data?.contactNumber}
+              </span>
+              <span className="printableDesign2-header-right-info">
+                <LocationOn
+                  sx={{
+                    padding: "7px",
+                    backgroundColor: "#ffffff",
+                    color: "#323b4c",
+                    borderRadius: "10px",
+                  }}
+                />
+                {data?.address}
+              </span>
+            </div>
           </div>
         </section>
 

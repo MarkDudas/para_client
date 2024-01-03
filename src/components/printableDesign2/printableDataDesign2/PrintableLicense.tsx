@@ -24,8 +24,9 @@ const PrintableLicense = () => {
         <div key={key}>
           <span className="printableData-licenseName">{item.licenseName}</span>
           <div className="printableData-license-info-container">
-            {item.issueingOrg} | {item.issueDateMonth} {item.issueDateYear} |{" "}
-            {item.description}
+            {item.issueingOrg} <br /> {item.issueDateMonth} -{" "}
+            {item.issueDateYear}
+            <br /> {item.description}
           </div>
         </div>
       ))}

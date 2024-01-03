@@ -4,6 +4,8 @@ export interface IJob {
   company: string;
   companyImageUrl: string;
   jobDescription: string;
+  jobQualifications: string;
+  jobResponsibilities: string;
   location: string;
   monthlySalaryFrom: number;
   monthlySalaryTo: number;

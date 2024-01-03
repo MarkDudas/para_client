@@ -75,7 +75,14 @@ const LineChartTopJob = () => {
   };
 
   return (
-    <div style={{ marginBottom: "200px", width: "100%", height: "500px" }}>
+    <div
+      style={{
+        marginBottom: "200px",
+        width: "100%",
+        height: "500px",
+        maxWidth: "1100px",
+      }}
+    >
       <h2>Top 3 Most Applied Jobs:</h2>
       <select
         style={{ padding: "10px 50px", fontSize: "20px" }}

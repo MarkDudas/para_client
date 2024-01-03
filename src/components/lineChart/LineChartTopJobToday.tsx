@@ -76,8 +76,8 @@ const LineChartTopJobToday = () => {
       style={{
         marginBottom: "200px",
         width: "100%",
+        maxWidth: "1100px",
         height: "500px",
-        marginTop: "50px",
       }}
     >
       <h2>Applied Jobs for today:</h2>

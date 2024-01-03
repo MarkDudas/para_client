@@ -3,8 +3,8 @@ import { UserInterface } from "../../types/Types";
 import "./Profile.css";
 import { useQuery } from "@tanstack/react-query";
 import AuthZustand from "../../zustand/AuthZustand";
-import { Place, Email, Call } from "@mui/icons-material";
-import { useState } from "react";
+import { Place, Email, Call, Edit } from "@mui/icons-material";
+import React, { useState } from "react";
 import { Dialog, DialogContent } from "@mui/material";
 import AddCareer from "../../components/addCareer/AddCareer";
 import CareerHistory from "../../components/careerHistory/CareerHistory";
@@ -24,12 +24,38 @@ import UploadProfilePic from "../../components/uploadProfilePic/UploadProfilePic
 
 const Profile = () => {
   const user = AuthZustand((state) => state.user);
+
   const [openAddCareer, setOpenAddCareer] = useState<boolean>(false);
   const [openAddEducation, setOpenAddEducation] = useState<boolean>(false);
   const [openAddLicense, setOpenAddLicense] = useState<boolean>(false);
   const [personalSummary, setPersonalSummary] = useState<string>("");
   const [openResume, setOpenResume] = useState<boolean>(false);
   const [design, setDesign] = useState<string>("design1");
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editedPosition, setEditedPosition] = useState<string>("");
+
+  const handleEditClick = () => {
+    setEditMode(true);
+    setEditedPosition(data?.position || "");
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_APP_API_URL}/api/user/update-position/${user}`,
+        {
+          position: editedPosition,
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedPosition(event.target.value);
+  };
 
   const { data } = useQuery<UserInterface>({
     queryKey: ["Profile"],
@@ -86,7 +112,58 @@ const Profile = () => {
           <div className="profile-header-info-container">
             <UploadProfilePic />
             <div className="profile-header-info-right">
-              <h1>{data?.firstName + " " + data?.lastName}</h1>
+              <h1 style={{ padding: 0, margin: 0 }}>
+                {data?.firstName + " " + data?.lastName}
+              </h1>
+              <span
+                style={{
+                  fontSize: "23px",
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "5px",
+                  fontWeight: "600",
+                }}
+              >
+                {editMode ? (
+                  <>
+                    <input
+                      type="text"
+                      value={editedPosition}
+                      onChange={handleInputChange}
+                      style={{
+                        fontSize: "23px",
+                        fontWeight: "600",
+                        marginRight: "5px",
+                        paddingLeft: "5px",
+                      }}
+                    />
+                    <button
+                      onClick={handleSaveClick}
+                      style={{
+                        fontSize: "12px",
+                        cursor: "pointer",
+                        backgroundColor: "black",
+                        color: "white",
+                        padding: "5px",
+                        border: "none",
+                        borderRadius: "5px",
+                        height: "40px",
+                        width: "70px",
+                      }}
+                    >
+                      Save
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {data?.position}
+                    <Edit
+                      onClick={handleEditClick}
+                      style={{ fontSize: "12px", cursor: "pointer" }}
+                    />
+                  </>
+                )}
+              </span>
               <span className="profile-info-list">
                 <Place /> {data?.address}
               </span>

@@ -259,7 +259,10 @@ const ApplicantList = () => {
         <Dialog open={openModal} onClose={toggleCloseModal}>
           <DialogContent>
             <div className="applicant-list-modal-container">
-              <button className="applicant-list-modal-close-btn">
+              <button
+                className="applicant-list-modal-close-btn"
+                onClick={toggleCloseModal}
+              >
                 <Close />
               </button>
               <label>
