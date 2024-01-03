@@ -49,7 +49,7 @@ const PDFReader = ({
           formData,
           {
             params: {
-              jobDescription: jobDescription,
+              jobQualifications: jobQualifications,
             },
           }
         );
