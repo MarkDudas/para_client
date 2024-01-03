@@ -7,12 +7,14 @@ import Loading from "../loading/Loading";
 
 interface IJobDescription {
   jobDescription: string;
+  jobQualifications: string;
   jobId: string;
   actualJobPosted: string;
 }
 
 const PDFReader = ({
   jobDescription,
+  jobQualifications,
   jobId,
   actualJobPosted,
 }: IJobDescription) => {
@@ -61,6 +63,7 @@ const PDFReader = ({
         formData.append("experience", response.data?.experience);
         formData.append("how", response.data?.how);
         formData.append("jobDescription", jobDescription);
+        formData.append("jobQualifications", jobQualifications);
         formData.append(
           "skills",
           JSON.stringify(response.data?.skills?.map((item: string) => item))

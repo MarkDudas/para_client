@@ -94,6 +94,7 @@ export interface IApplicant {
   skills: string[];
   job_applying: string;
   jobDescription: string;
+  jobQualifications: string;
   experience: string;
   rank: number;
   how: string;

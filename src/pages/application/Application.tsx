@@ -48,6 +48,7 @@ const Application = () => {
             {data && (
               <PDFReader
                 jobDescription={data?.jobDescription}
+                jobQualifications={data.jobQualifications}
                 jobId={id}
                 actualJobPosted={data.jobTitle}
               />
