@@ -236,7 +236,7 @@ const ApplicantList = () => {
                     <button
                       className="applicant-list-modal-btn"
                       onClick={() =>
-                        toggleOpenModal(item.jobDescription, item.how)
+                        toggleOpenModal(item.jobQualifications, item.how)
                       }
                     >
                       See Job Description and "How" it is rank
@@ -266,7 +266,7 @@ const ApplicantList = () => {
                 <Close />
               </button>
               <label>
-                Job Description:
+                Job Qualifications:
                 <span>{selectedJobDescription}</span>
               </label>
               <label>
