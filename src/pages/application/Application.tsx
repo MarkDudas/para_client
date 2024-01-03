@@ -52,7 +52,12 @@ const Application = () => {
                 actualJobPosted={data.jobTitle}
               />
             )}
+            <h3 style={{ paddingLeft: 0 }}>Job Description: </h3>
             <span>{data?.jobDescription}</span>
+            <h3 style={{ paddingLeft: 0 }}>Job Responsibilities: </h3>
+            <span>{data?.jobResponsibilities}</span>
+            <h3 style={{ paddingLeft: 0 }}>Job Qualification: </h3>
+            <span>{data?.jobQualifications}</span>
           </div>
         </div>
       </div>
