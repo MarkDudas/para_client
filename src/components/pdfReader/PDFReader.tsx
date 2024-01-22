@@ -105,7 +105,7 @@ const PDFReader = ({
   return (
     <div>
       {loading && <Loading />}
-      <h4>Upload your Resume in PDF format</h4>
+      <h4>Upload your Resume in text-based PDF format</h4>
       <label htmlFor="file-upload" className="custom-file-upload">
         Select a File
         <input
